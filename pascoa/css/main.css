@@ -144,7 +144,27 @@ body {
   margin: 0 auto;
   background: transparent;
 }
+.hero-rabbit {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 85px;
+  z-index: 10;
+  pointer-events: none;
 
+  /* animação suave */
+  animation: floatRabbit 3s ease-in-out infinite;
+
+  /* glow leve */
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,0.25));
+}
+
+@keyframes floatRabbit {
+  0% { transform: translate(-50%, 0px); }
+  50% { transform: translate(-50%, -6px); }
+  100% { transform: translate(-50%, 0px); }
+}
 /* Meta */
 .sidebar-meta {
   display: flex;
