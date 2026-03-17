@@ -106,11 +106,13 @@ function renderVisaoGeral() {
             borderColor: PALETA.lilac,
             backgroundColor: PALETA.lilacBg,
             borderWidth: 3,
-            pointRadius: 6,
+            pointRadius: 5,
+            pointHoverRadius: 7,
             pointBackgroundColor: PALETA.lilac,
             pointBorderColor: '#fff',
             pointBorderWidth: 2,
-            tension: 0.35,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.42,
             fill: true
           },
           {
@@ -119,11 +121,13 @@ function renderVisaoGeral() {
             borderColor: PALETA.pink,
             backgroundColor: PALETA.pinkBg,
             borderWidth: 3,
-            pointRadius: 6,
+            pointRadius: 5,
+            pointHoverRadius: 7,
             pointBackgroundColor: PALETA.pink,
             pointBorderColor: '#fff',
             pointBorderWidth: 2,
-            tension: 0.35,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.42,
             fill: true
           }
         ]
@@ -133,7 +137,7 @@ function renderVisaoGeral() {
         maintainAspectRatio: false,
         interaction: { mode: 'index', intersect: false },
         plugins: {
-          legend: { position: 'top', labels: { usePointStyle: true, padding: 16, font: { size: 12 } } },
+          legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8, padding: 14, font: { size: 11, weight: '600' } } },
           tooltip: {
             backgroundColor: 'rgba(61,26,0,0.9)',
             titleColor: '#fff',
@@ -143,9 +147,11 @@ function renderVisaoGeral() {
           }
         },
         scales: {
-          x: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 11 } } },
+          x: { grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false }, ticks: { font: { size: 11, weight: '600' } } },
           y: {
-            grid: { color: 'rgba(0,0,0,0.04)' },
+            grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false },
+            beginAtZero: true,
+            grace: '8%',
             ticks: { font: { size: 11 }, callback: v => fmt(v) }
           }
         }
@@ -339,7 +345,7 @@ function buildRankingChart(metric) {
   const colors = [
     PALETA.lilac, PALETA.pink, PALETA.orange, PALETA.caramel,
     PALETA.mint, PALETA.choco,
-    'rgba(155,89,182,0.6)', 'rgba(233,30,140,0.6)', 'rgba(230,126,34,0.6)'
+    'rgba(232,160,32,0.6)', 'rgba(211,84,0,0.6)', 'rgba(230,126,34,0.6)'
   ];
 
   chartInstances['chartRankingBar'] = new Chart(ctx, {
@@ -561,9 +567,11 @@ function renderCRM() {
           annotation: {}
         },
         scales: {
-          x: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 11 } } },
+          x: { grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false }, ticks: { font: { size: 11, weight: '600' } } },
           y: {
-            grid: { color: 'rgba(0,0,0,0.04)' },
+            grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false },
+            beginAtZero: true,
+            grace: '8%',
             ticks: { font: { size: 11 }, callback: v => fmt(v) }
           }
         }
