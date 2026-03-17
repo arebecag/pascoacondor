@@ -251,28 +251,6 @@ body {
 }
 
 
-.easter-deco {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-.deco-choco {
-  position: absolute;
-  right: 8px;
-  top: -24px;
-  width: 70px;
-  opacity: 0.92;
-  filter: drop-shadow(0 8px 12px rgba(61, 26, 0, 0.25));
-}
-.deco-rabbit {
-  position: absolute;
-  right: -8px;
-  bottom: 8px;
-  width: 94px;
-  opacity: 0.95;
-  filter: drop-shadow(0 10px 14px rgba(61, 26, 0, 0.2));
-}
 
 #visao-geral .hero-banner,
 #visao-geral .kpi-row,
@@ -298,8 +276,8 @@ body {
   position: absolute;
   inset: 0;
   display: flex;
-  align-items: flex-end;
-  padding: 0.8rem 1rem;
+  align-items: flex-start;
+  padding: 0.55rem 0.8rem;
 }
 .hero-drip {
   position: absolute;
@@ -321,42 +299,47 @@ body {
   mix-blend-mode: screen;
   pointer-events: none;
 }
-.hero-text {
-  max-width: 70%;
-  position: relative;
-  z-index: 2;
-  background: rgba(61,26,0,0.62);
-  border-radius: 10px;
-  padding: 10px 16px;
+.hero-topbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: rgba(61,26,0,0.34);
+  border: 1px solid rgba(255,255,255,0.24);
+  border-radius: 12px;
+  padding: 7px 10px;
   backdrop-filter: blur(4px);
 }
+.hero-text {
+  max-width: 74%;
+  position: relative;
+  z-index: 2;
+  background: rgba(61,26,0,0.78);
+  border-radius: 8px;
+  padding: 7px 12px;
+}
 .hero-text h1 {
-  font-size: 1.05rem;
+  font-size: 0.98rem;
   font-weight: 800;
   color: #fff;
   line-height: 1.2;
 }
 .hero-text p {
-  font-size: 0.72rem;
+  font-size: 0.67rem;
   color: var(--yellow-egg);
   margin-top: 3px;
 }
-.hero-chip {
-  margin-left: auto;
-  align-self: flex-start;
-  background: rgba(255,248,238,0.9);
+.hero-tag {
+  flex-shrink: 0;
+  background: rgba(255,248,238,0.92);
   color: var(--choco-mid);
   border-radius: 999px;
-  padding: 6px 12px;
-  font-size: 0.68rem;
+  padding: 6px 10px;
+  font-size: 0.62rem;
   font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  box-shadow: 0 6px 18px rgba(61,26,0,0.18);
   border: 1px solid #f6dfbf;
 }
-.hero-chip i { color: var(--caramel); }
 
 /* ─── KPI ROW ─── */
 .kpi-row {
@@ -548,10 +531,6 @@ body {
 /* ══ Pódio 1 special ══ */
 .podio-1 .podio-img-wrap { width: 84px; height: 84px; }
 
-@media (max-width: 1320px) {
-  .deco-rabbit { opacity: 0.25; right: -20px; }
-  .deco-choco { width: 56px; }
-}
 
 
 /* ═══════════════════════════════

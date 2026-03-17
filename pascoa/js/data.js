@@ -67,7 +67,7 @@ const PRODUTOS_CAMPANHA = [
     soldDentro: true,
     itens: 863,
     clientes: 547,
-    img: 'https://sspark.genspark.ai/cfimages?u1=KBuBCc2yMkFg1AWQ6563z5ALNxAJojewrqraVTOV3dxSFiUEVKJh4jMWmZfStJ1mwWSZMMGmj4Psm0kXECDR4PfKBll26gpRQi60kzgeEimSkuH4BDk%3D&u2=1XWAvfeli8zlw85D&width=2560'
+    img: 'assets/img/laka-branco.svg'
   },
   {
     id: 2077568,
@@ -101,7 +101,7 @@ const PRODUTOS_CAMPANHA = [
     soldDentro: true,
     itens: 626,
     clientes: 437,
-    img: 'https://sspark.genspark.ai/cfimages?u1=2bSTl6E4%2F%2Fw0wf6Xes05msd46oGhbB5y9erL8ioz%2B9xjBzuPc3251RaPJ6jnRsZgSBaFUi6KfKKsy5NUlwMB0%2BGCjB3OuudyNc9rb4MeFgT2UDYSfBbDbuOn6v5kQb8LzPvevuWbs5hGeP5FqsXMjI4%3D&u2=iH1Ss8KBqMsjLYEG&width=2560'
+    img: 'assets/img/shot-amarelo.svg'
   },
   {
     id: 2077592,
@@ -189,7 +189,7 @@ const PRODUTOS_CAMPANHA = [
     soldDentro: true,
     itens: 3,
     clientes: 3,
-    img: 'https://sspark.genspark.ai/cfimages?u1=2bSTl6E4%2F%2Fw0wf6Xes05msd46oGhbB5y9erL8ioz%2B9xjBzuPc3251RaPJ6jnRsZgSBaFUi6KfKKsy5NUlwMB0%2BGCjB3OuudyNc9rb4MeFgT2UDYSfBbDbuOn6v5kQb8LzPvevuWbs5hGeP5FqsXMjI4%3D&u2=iH1Ss8KBqMsjLYEG&width=2560'
+    img: 'assets/img/shot-amarelo.svg'
   },
   {
     id: 2207421,
@@ -199,7 +199,7 @@ const PRODUTOS_CAMPANHA = [
     priceOffer: 10.90,
     discount: 8,
     soldDentro: false,
-    img: 'https://sspark.genspark.ai/cfimages?u1=KBuBCc2yMkFg1AWQ6563z5ALNxAJojewrqraVTOV3dxSFiUEVKJh4jMWmZfStJ1mwWSZMMGmj4Psm0kXECDR4PfKBll26gpRQi60kzgeEimSkuH4BDk%3D&u2=1XWAvfeli8zlw85D&width=2560'
+    img: 'assets/img/laka-branco.svg'
   },
   {
     id: 2207439,
@@ -229,17 +229,17 @@ const PRODUTOS_CAMPANHA = [
     priceOffer: 6.89,
     discount: 8,
     soldDentro: false,
-    img: 'https://sspark.genspark.ai/cfimages?u1=KBuBCc2yMkFg1AWQ6563z5ALNxAJojewrqraVTOV3dxSFiUEVKJh4jMWmZfStJ1mwWSZMMGmj4Psm0kXECDR4PfKBll26gpRQi60kzgeEimSkuH4BDk%3D&u2=1XWAvfeli8zlw85D&width=2560'
+    img: 'assets/img/laka-branco.svg'
   }
 ];
 
 /* ── PRODUTOS VENDIDOS DENTRO (ranqueados por qtd) ── */
 const RANKING_DENTRO = [
   { id: 2077535, nome: 'Choc. Lacta Ao Leite 80g',              shortName: 'Ao Leite 80g',     itens: 1046, clientes: 453, cupons: 440, img: 'https://sspark.genspark.ai/cfimages?u1=WzACG%2F4YtAYZ1OI7hY2sQPHxsoKeFhsXLFMG9v7Okg2D%2B%2F4oUYyCSejbclETE%2BD4By8%2FMTipDifbx58QfIQGS3dNyA%3D%3D&u2=%2BCgrL01zCpbYbTqA&width=2560' },
-  { id: 2077543, nome: 'Choc. Lacta Laka 80g',                  shortName: 'Laka 80g',          itens:  863, clientes: 547, cupons: 530, img: 'https://sspark.genspark.ai/cfimages?u1=KBuBCc2yMkFg1AWQ6563z5ALNxAJojewrqraVTOV3dxSFiUEVKJh4jMWmZfStJ1mwWSZMMGmj4Psm0kXECDR4PfKBll26gpRQi60kzgeEimSkuH4BDk%3D&u2=1XWAvfeli8zlw85D&width=2560' },
-  { id: 2077584, nome: 'Choc. Lacta Shot 80g',                  shortName: 'Shot 80g',          itens:  626, clientes: 437, cupons: 420, img: 'https://sspark.genspark.ai/cfimages?u1=2bSTl6E4%2F%2Fw0wf6Xes05msd46oGhbB5y9erL8ioz%2B9xjBzuPc3251RaPJ6jnRsZgSBaFUi6KfKKsy5NUlwMB0%2BGCjB3OuudyNc9rb4MeFgT2UDYSfBbDbuOn6v5kQb8LzPvevuWbs5hGeP5FqsXMjI4%3D&u2=iH1Ss8KBqMsjLYEG&width=2560' },
+  { id: 2077543, nome: 'Choc. Lacta Laka 80g',                  shortName: 'Laka 80g',          itens:  863, clientes: 547, cupons: 530, img: 'assets/img/laka-branco.svg' },
+  { id: 2077584, nome: 'Choc. Lacta Shot 80g',                  shortName: 'Shot 80g',          itens:  626, clientes: 437, cupons: 420, img: 'assets/img/shot-amarelo.svg' },
   { id: 1991454, nome: 'Bombom Lacta Ouro Bco/Sonho Valsa 220g', shortName: 'Bombom 220g',       itens:    4, clientes:   4, cupons:   4, img: 'https://sspark.genspark.ai/cfimages?u1=prmCEuVNUiJjNc4qxwAI8%2Bv9dT8Brmg4uIbTmhWDF8Zet3joOM2%2Fup0mMAymFFz8xWZDtKrR2ncu6i9pgAfTyQ1B3g%3D%3D&u2=oGX0TPyUQrZpMQdZ&width=2560' },
-  { id: 2207413, nome: 'Choc. Lacta Shot 145g',                 shortName: 'Shot 145g',         itens:    3, clientes:   3, cupons:   3, img: 'https://sspark.genspark.ai/cfimages?u1=2bSTl6E4%2F%2Fw0wf6Xes05msd46oGhbB5y9erL8ioz%2B9xjBzuPc3251RaPJ6jnRsZgSBaFUi6KfKKsy5NUlwMB0%2BGCjB3OuudyNc9rb4MeFgT2UDYSfBbDbuOn6v5kQb8LzPvevuWbs5hGeP5FqsXMjI4%3D&u2=iH1Ss8KBqMsjLYEG&width=2560' },
+  { id: 2207413, nome: 'Choc. Lacta Shot 145g',                 shortName: 'Shot 145g',         itens:    3, clientes:   3, cupons:   3, img: 'assets/img/shot-amarelo.svg' },
   { id: 2207405, nome: 'Choc. Lacta Ao Leite 145g',             shortName: 'Ao Leite 145g',     itens:    2, clientes:   2, cupons:   2, img: 'https://sspark.genspark.ai/cfimages?u1=WzACG%2F4YtAYZ1OI7hY2sQPHxsoKeFhsXLFMG9v7Okg2D%2B%2F4oUYyCSejbclETE%2BD4By8%2FMTipDifbx58QfIQGS3dNyA%3D%3D&u2=%2BCgrL01zCpbYbTqA&width=2560' },
   { id: 2207397, nome: 'Choc. Lacta Diamante Negro 145g',       shortName: 'Diam. Negro 145g',  itens:    1, clientes:   1, cupons:   1, img: 'https://sspark.genspark.ai/cfimages?u1=KzLgqWtCZUkvaELu%2FzrHEbsvj6tCkggQv0lOWgoe7HPuTShcv2FLXE5lwscFtsdjp882ZAdy9Eb%2FE1Z4NjOdfGBf4RjzoJ0rs2yVE1whtqcWb5vDv%2BefaLPr7v7nC1%2B6CY6lasEQqxdpyM%2FtO6OaGBi9oSLAlhfiMIHB0NFdommahfK9ABjXADqO2JWfNq2xq66l4vHFWGQAEGU%2BdiNJ8sR2J4V%2BmPgYK0mhNg%3D%3D&u2=Rj2JfNbtLQxTdDif&width=2560' },
   { id: 2077576, nome: 'Choc. Lacta Diamante Negro 80g',        shortName: 'Diam. Negro 80g',   itens:    1, clientes:   1, cupons:   1, img: 'https://sspark.genspark.ai/cfimages?u1=KzLgqWtCZUkvaELu%2FzrHEbsvj6tCkggQv0lOWgoe7HPuTShcv2FLXE5lwscFtsdjp882ZAdy9Eb%2FE1Z4NjOdfGBf4RjzoJ0rs2yVE1whtqcWb5vDv%2BefaLPr7v7nC1%2B6CY6lasEQqxdpyM%2FtO6OaGBi9oSLAlhfiMIHB0NFdommahfK9ABjXADqO2JWfNq2xq66l4vHFWGQAEGU%2BdiNJ8sR2J4V%2BmPgYK0mhNg%3D%3D&u2=Rj2JfNbtLQxTdDif&width=2560' },
@@ -250,7 +250,6 @@ const RANKING_DENTRO = [
 // Nota: dia 12 só tem dados de início; dia 13 e 14 têm dados completos.
 // Para dia 12, estimamos com base na distribuição do arquivo (proporções loja)
 const EVOLUCAO_DIARIA_CAMPANHA = [
-  { data: '12/03', clientes: 0,    itens: 0    },  // campanha iniciou, sem vendas mapeadas ainda
   { data: '13/03', clientes: 265,  itens: 758  },
   { data: '14/03', clientes: 1057, itens: 1789 }
 ];
@@ -324,7 +323,7 @@ const BEST_PRODUCT_BY_DAY = [
     data: '14/03',
     produto: 'Choc. Lacta Laka 80g',
     itens: 674,
-    img: 'https://sspark.genspark.ai/cfimages?u1=KBuBCc2yMkFg1AWQ6563z5ALNxAJojewrqraVTOV3dxSFiUEVKJh4jMWmZfStJ1mwWSZMMGmj4Psm0kXECDR4PfKBll26gpRQi60kzgeEimSkuH4BDk%3D&u2=1XWAvfeli8zlw85D&width=2560'
+    img: 'assets/img/laka-branco.svg'
   }
 ];
 
