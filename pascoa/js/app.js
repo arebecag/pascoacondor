@@ -339,7 +339,7 @@ function buildRankingChart(metric) {
   const colors = [
     PALETA.lilac, PALETA.pink, PALETA.orange, PALETA.caramel,
     PALETA.mint, PALETA.choco,
-    'rgba(155,89,182,0.6)', 'rgba(233,30,140,0.6)', 'rgba(230,126,34,0.6)'
+    'rgba(232,160,32,0.6)', 'rgba(211,84,0,0.6)', 'rgba(230,126,34,0.6)'
   ];
 
   chartInstances['chartRankingBar'] = new Chart(ctx, {
