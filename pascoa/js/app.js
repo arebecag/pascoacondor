@@ -106,11 +106,13 @@ function renderVisaoGeral() {
             borderColor: PALETA.lilac,
             backgroundColor: PALETA.lilacBg,
             borderWidth: 3,
-            pointRadius: 6,
+            pointRadius: 5,
+            pointHoverRadius: 7,
             pointBackgroundColor: PALETA.lilac,
             pointBorderColor: '#fff',
             pointBorderWidth: 2,
-            tension: 0.35,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.42,
             fill: true
           },
           {
@@ -119,11 +121,13 @@ function renderVisaoGeral() {
             borderColor: PALETA.pink,
             backgroundColor: PALETA.pinkBg,
             borderWidth: 3,
-            pointRadius: 6,
+            pointRadius: 5,
+            pointHoverRadius: 7,
             pointBackgroundColor: PALETA.pink,
             pointBorderColor: '#fff',
             pointBorderWidth: 2,
-            tension: 0.35,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.42,
             fill: true
           }
         ]
@@ -133,7 +137,7 @@ function renderVisaoGeral() {
         maintainAspectRatio: false,
         interaction: { mode: 'index', intersect: false },
         plugins: {
-          legend: { position: 'top', labels: { usePointStyle: true, padding: 16, font: { size: 12 } } },
+          legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8, padding: 14, font: { size: 11, weight: '600' } } },
           tooltip: {
             backgroundColor: 'rgba(61,26,0,0.9)',
             titleColor: '#fff',
@@ -143,9 +147,11 @@ function renderVisaoGeral() {
           }
         },
         scales: {
-          x: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 11 } } },
+          x: { grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false }, ticks: { font: { size: 11, weight: '600' } } },
           y: {
-            grid: { color: 'rgba(0,0,0,0.04)' },
+            grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false },
+            beginAtZero: true,
+            grace: '8%',
             ticks: { font: { size: 11 }, callback: v => fmt(v) }
           }
         }
@@ -160,9 +166,9 @@ function renderVisaoGeral() {
     chartInstances['chartDonutClientes'] = new Chart(ctxDonut, {
       type: 'doughnut',
       data: {
-        labels: ['Dentro (1.322)', 'Fora (95.844)'],
+        labels: [`Dentro (${fmt(TOTAIS.clientesDentro)})`, `Fora (${fmt(TOTAIS.clientesFora)})`],
         datasets: [{
-          data: [1322, 95844],
+          data: [TOTAIS.clientesDentro, TOTAIS.clientesFora],
           backgroundColor: [PALETA.lilac, '#f5ead8'],
           borderColor: ['#fff', '#fff'],
           borderWidth: 3,
@@ -178,7 +184,7 @@ function renderVisaoGeral() {
           tooltip: {
             backgroundColor: 'rgba(61,26,0,0.9)',
             callbacks: {
-              label: ctx => ` ${fmt(ctx.parsed)} clientes (${fmtPct(ctx.parsed / 97166 * 100, 1)})`
+              label: ctx => ` ${fmt(ctx.parsed)} clientes (${fmtPct(ctx.parsed / (TOTAIS.clientesDentro + TOTAIS.clientesFora) * 100, 1)})`
             }
           }
         }
@@ -261,7 +267,7 @@ function renderVisaoOperacional() {
       data: {
         labels: ['Atingidos', 'Gap'],
         datasets: [{
-          data: [1.37, 98.63],
+          data: [(TOTAIS.clientesDentro / TOTAIS.clientesTotal) * 100, 100 - ((TOTAIS.clientesDentro / TOTAIS.clientesTotal) * 100)],
           backgroundColor: [PALETA.lilac, '#f5ead8'],
           borderColor: ['#fff', '#fff'],
           borderWidth: 3,
@@ -339,7 +345,7 @@ function buildRankingChart(metric) {
   const colors = [
     PALETA.lilac, PALETA.pink, PALETA.orange, PALETA.caramel,
     PALETA.mint, PALETA.choco,
-    'rgba(155,89,182,0.6)', 'rgba(233,30,140,0.6)', 'rgba(230,126,34,0.6)'
+    'rgba(232,160,32,0.6)', 'rgba(211,84,0,0.6)', 'rgba(230,126,34,0.6)'
   ];
 
   chartInstances['chartRankingBar'] = new Chart(ctx, {
@@ -561,9 +567,11 @@ function renderCRM() {
           annotation: {}
         },
         scales: {
-          x: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 11 } } },
+          x: { grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false }, ticks: { font: { size: 11, weight: '600' } } },
           y: {
-            grid: { color: 'rgba(0,0,0,0.04)' },
+            grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false },
+            beginAtZero: true,
+            grace: '8%',
             ticks: { font: { size: 11 }, callback: v => fmt(v) }
           }
         }
@@ -581,7 +589,7 @@ function renderCRM() {
         labels: ['Base Total', 'Compraram', 'Na Campanha'],
         datasets: [{
           label: 'Clientes',
-          data: [96615, 95844 + 1322, 1322],
+          data: [TOTAIS.clientesTotal, TOTAIS.clientesFora + TOTAIS.clientesDentro, TOTAIS.clientesDentro],
           backgroundColor: [PALETA.lilacBg, PALETA.caramelBg, PALETA.lilac],
           borderColor: [PALETA.lilac, PALETA.caramel, PALETA.lilac],
           borderWidth: 2,
@@ -621,7 +629,7 @@ function buildCRMDayTable() {
   const tbody = document.getElementById('crmDayTableBody');
   if (!tbody) return;
 
-  const dentroPorDia = { '12/03': 0, '13/03': 265, '14/03': 1057 };
+  const dentroPorDia = { '12/03': 0, '13/03': 1189, '14/03': 1859 };
 
   tbody.innerHTML = EVOLUCAO_DIARIA_GERAL.map(d => {
     const dentro = dentroPorDia[d.data] || 0;
@@ -657,31 +665,31 @@ function buildCRMInsights() {
       icon: 'fas fa-arrow-trend-up',
       type: 'good',
       title: 'Crescimento acelerado',
-      text: 'De 265 clientes (dia 13) para 1.057 clientes (dia 14), um crescimento de +299% em 24h na campanha.'
+      text: 'De 1.189 clientes (dia 13) para 1.859 clientes (dia 14), um crescimento de +56% em 24h na campanha.'
     },
     {
       icon: 'fas fa-users-slash',
       type: 'alert',
       title: 'Grande gap de cobertura',
-      text: 'Apenas 1,37% dos clientes foram atingidos pela campanha. Há um potencial de 95.293 clientes ainda a alcançar.'
+      text: 'A campanha atingiu 10,00% da base. Ainda há potencial de 27.432 clientes fora da campanha.'
     },
     {
       icon: 'fas fa-store',
       type: 'info',
-      title: '17 lojas com vendas na campanha',
-      text: 'A loja Nilo Peçanha lidera em volume. Campanha presente em todas as filiais principais de Curitiba e Maringá.'
+      title: '51 lojas com vendas na campanha',
+      text: 'A loja Maringá Av Kakogawa lidera em quantidade vendida, seguida por São José Rua Joinville e Pinheirinho.'
     },
     {
       icon: 'fas fa-link',
       type: 'warn',
-      title: 'Overlap: 551 clientes',
-      text: '551 clientes compraramProdutos tanto "Dentro" quanto "Fora" da campanha — potencial de upsell identificado.'
+      title: 'Overlap: 0 clientes',
+      text: 'Não houve sobreposição identificada entre clientes Dentro e Fora nesta extração de dados.'
     },
     {
       icon: 'fas fa-egg',
       type: 'good',
-      title: '9 de 19 produtos com vendas',
-      text: 'Dos 19 produtos mapeados na campanha, 9 já registraram vendas. Os 10 restantes ainda não têm adesão.'
+      title: '13 de 19 produtos com vendas',
+      text: 'Dos 19 produtos mapeados na campanha, 13 já registraram vendas. Restam 6 produtos sem adesão.'
     },
     {
       icon: 'fas fa-calendar-check',
