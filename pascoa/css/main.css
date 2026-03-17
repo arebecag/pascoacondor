@@ -888,6 +888,8 @@ body {
 }
 
 @media (max-width: 800px) {
+  .easter-deco { display: none; }
+  .hero-chip { display: none; }
   :root { --sidebar-w: 0px; }
   .sidebar { transform: translateX(-100%); }
   .main-content { margin-left: 0; padding: 1rem; }
