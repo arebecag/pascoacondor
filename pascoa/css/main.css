@@ -199,14 +199,19 @@ body {
 
 /* Sidebar rabbit */
 .sidebar-rabbit {
-  padding: 14px 18px 6px;
+  padding: 10px 14px 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  font-size: 0.72rem;
-  color: rgba(255,255,255,0.35);
+  gap: 4px;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.58);
   letter-spacing: 0.5px;
+}
+.rabbit-icon {
+  font-size: 2.5rem;
+  color: rgba(255,255,255,0.78);
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.2));
 }
 
 /* ═══════════════════════════════
@@ -276,18 +281,8 @@ body {
   position: absolute;
   inset: 0;
   display: flex;
-  align-items: flex-start;
-  padding: 0.55rem 0.8rem;
-}
-.hero-drip {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 34px;
-  object-fit: cover;
-  opacity: 0.92;
-  z-index: 3;
+  align-items: flex-end;
+  padding: 0.8rem 1rem;
 }
 .hero-frame {
   position: absolute;
@@ -320,13 +315,13 @@ body {
   padding: 7px 12px;
 }
 .hero-text h1 {
-  font-size: 0.98rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: #fff;
   line-height: 1.2;
 }
 .hero-text p {
-  font-size: 0.67rem;
+  font-size: 0.72rem;
   color: var(--yellow-egg);
   margin-top: 3px;
 }
