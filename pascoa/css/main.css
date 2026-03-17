@@ -208,9 +208,10 @@ body {
   color: rgba(255,255,255,0.58);
   letter-spacing: 0.5px;
 }
-.rabbit-icon {
-  font-size: 2.5rem;
-  color: rgba(255,255,255,0.78);
+.rabbit-img {
+  width: 86px;
+  height: auto;
+  object-fit: contain;
   filter: drop-shadow(0 6px 10px rgba(0,0,0,0.2));
 }
 
