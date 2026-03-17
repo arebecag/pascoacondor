@@ -6,10 +6,10 @@
 
 /* ── Paleta Páscoa para Charts ── */
 const PALETA = {
-  lilac:   '#9b59b6',
-  lilacBg: 'rgba(155,89,182,0.18)',
-  pink:    '#e91e8c',
-  pinkBg:  'rgba(233,30,140,0.15)',
+  lilac:   '#e8a020',
+  lilacBg: 'rgba(232,160,32,0.20)',
+  pink:    '#d35400',
+  pinkBg:  'rgba(211,84,0,0.15)',
   orange:  '#e67e22',
   orangeBg:'rgba(230,126,34,0.15)',
   caramel: '#e8a020',
