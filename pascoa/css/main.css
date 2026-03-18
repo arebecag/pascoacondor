@@ -497,30 +497,22 @@ body {
 }
 
 .podio-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.15fr 1fr;
-  gap: 1rem;
-  align-items: end;
-  max-width: 100%;
-  margin: 0 auto;
-}
-
-.podio-item {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  background: #ffffff;
-  border: 1px solid rgba(195,122,48,0.10);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow);
-  padding: 0.75rem 0.6rem 0.55rem;
-  text-align: center;
-  transition: transform 0.25s;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1rem;
 }
 
-.podio-item:hover {
-  transform: translateY(-4px);
+.podio-item.first {
+  height: 120px;
+}
+
+.podio-item.second {
+  height: 100px;
+}
+
+.podio-item.third {
+  height: 90px;
 }
 
 .podio-img-wrap {
