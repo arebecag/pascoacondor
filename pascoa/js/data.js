@@ -84,7 +84,6 @@ const EVOLUCAO_DIARIA_GERAL = [
   { data: '16/03', qtd: 6696, cupons: 5094, clientes: 4705 },
   { data: '17/03', qtd: 9176, cupons: 6420, clientes: 5993 }
 ];
-
 const RANKING_LOJAS_DENTRO = [
   { loja: '33. São José - Rua Joinville', qtd: 360, tickets: 256, clientes: 243 },
   { loja: '21. Nilo Peçanha', qtd: 328, tickets: 197, clientes: 180 },
