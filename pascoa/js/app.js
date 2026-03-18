@@ -1,6 +1,6 @@
 // ============================================================
 //  DASHBOARD PÁSCOA — APP.JS
-//  Atualizado com base na planilha
+//  Versão TV: Dentro e Fora no mesmo gráfico, sem botões
 // ============================================================
 
 Chart.defaults.font.family = "'Inter', sans-serif";
@@ -8,7 +8,6 @@ Chart.defaults.color = '#888';
 
 let chartInstances = {};
 let rankMetric = 'itens';
-let campaignView = 'Dentro';
 let currentSection = 'visao-geral';
 
 function fmt(n) {
@@ -54,22 +53,6 @@ function animateCounters() {
   });
 }
 
-function syncCampaignViewButtons() {
-  document.querySelectorAll('.campaign-view-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.view === campaignView);
-  });
-}
-
-function initViewButtons() {
-  document.querySelectorAll('.campaign-view-btn').forEach(btn => {
-    btn.onclick = () => {
-      campaignView = btn.dataset.view;
-      syncCampaignViewButtons();
-      renderSection(currentSection);
-    };
-  });
-}
-
 function initNav() {
   document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', e => {
@@ -111,42 +94,37 @@ function renderSection(id) {
   }
 
   setTimeout(animateCounters, 100);
-  setTimeout(syncCampaignViewButtons, 0);
-  setTimeout(initViewButtons, 0);
 }
 
-function getCampaignSeries(view) {
+/**
+ * Série completa 01/03 a 17/03
+ * - Antes de 13/03: Dentro = 0, Fora = Total do dia
+ * - 13/03 em diante: Dentro e Fora conforme planilha
+ */
+function getFullCampaignSeries() {
   const campaignMap = Object.fromEntries(
     EVOLUCAO_DIARIA_CAMPANHA.map(d => [d.data, d])
   );
 
   const labels = EVOLUCAO_DIARIA_GERAL.map(d => d.data);
 
-  if (view === 'Dentro') {
-    return {
-      labels,
-      qtd: EVOLUCAO_DIARIA_GERAL.map(d => campaignMap[d.data]?.Dentro.qtd ?? 0),
-      tickets: EVOLUCAO_DIARIA_GERAL.map(d => campaignMap[d.data]?.Dentro.tickets ?? 0),
-      clientes: EVOLUCAO_DIARIA_GERAL.map(d => campaignMap[d.data]?.Dentro.clientes ?? 0)
-    };
-  }
-
-  if (view === 'Fora') {
-    return {
-      labels,
-      qtd: EVOLUCAO_DIARIA_GERAL.map(d => campaignMap[d.data]?.Fora.qtd ?? d.qtd),
-      tickets: EVOLUCAO_DIARIA_GERAL.map(d => campaignMap[d.data]?.Fora.tickets ?? d.cupons),
-      clientes: EVOLUCAO_DIARIA_GERAL.map(d => campaignMap[d.data]?.Fora.clientes ?? d.clientes)
-    };
-  }
-
   return {
     labels,
-    qtd: EVOLUCAO_DIARIA_GERAL.map(d => d.qtd),
-    tickets: EVOLUCAO_DIARIA_GERAL.map(d => d.cupons),
-    clientes: EVOLUCAO_DIARIA_GERAL.map(d => d.clientes)
+
+    dentroQtd: EVOLUCAO_DIARIA_GERAL.map(d => campaignMap[d.data]?.Dentro.qtd ?? 0),
+    dentroTickets: EVOLUCAO_DIARIA_GERAL.map(d => campaignMap[d.data]?.Dentro.tickets ?? 0),
+    dentroClientes: EVOLUCAO_DIARIA_GERAL.map(d => campaignMap[d.data]?.Dentro.clientes ?? 0),
+
+    foraQtd: EVOLUCAO_DIARIA_GERAL.map(d => campaignMap[d.data]?.Fora.qtd ?? d.qtd),
+    foraTickets: EVOLUCAO_DIARIA_GERAL.map(d => campaignMap[d.data]?.Fora.tickets ?? d.cupons),
+    foraClientes: EVOLUCAO_DIARIA_GERAL.map(d => campaignMap[d.data]?.Fora.clientes ?? d.clientes),
+
+    totalQtd: EVOLUCAO_DIARIA_GERAL.map(d => d.qtd),
+    totalTickets: EVOLUCAO_DIARIA_GERAL.map(d => d.cupons),
+    totalClientes: EVOLUCAO_DIARIA_GERAL.map(d => d.clientes)
   };
 }
+
 // ═══════════════════════════════════════════════════════════════
 //  VISÃO GERAL
 // ═══════════════════════════════════════════════════════════════
@@ -189,7 +167,7 @@ function buildChartEvolucaoGeral() {
   const ctx = document.getElementById('chartEvolucaoDiaria');
   if (!ctx) return;
 
-  const series = getCampaignSeries(campaignView);
+  const series = getFullCampaignSeries();
 
   chartInstances.chartEvolucaoDiaria = new Chart(ctx, {
     type: 'line',
@@ -197,34 +175,66 @@ function buildChartEvolucaoGeral() {
       labels: series.labels,
       datasets: [
         {
-          label: `Clientes — ${campaignView}`,
-          data: series.clientes,
+          label: 'Clientes — Dentro',
+          data: series.dentroClientes,
           borderColor: PALETA.lilac,
           backgroundColor: PALETA.lilacBg,
           borderWidth: 3,
-          pointRadius: 5,
-          pointHoverRadius: 7,
+          pointRadius: 4,
+          pointHoverRadius: 6,
           pointBackgroundColor: PALETA.lilac,
           pointBorderColor: '#fff',
           pointBorderWidth: 2,
           cubicInterpolationMode: 'monotone',
           tension: 0.45,
-          fill: true
+          fill: false
         },
         {
-          label: `Qtd Vendida — ${campaignView}`,
-          data: series.qtd,
+          label: 'Clientes — Fora',
+          data: series.foraClientes,
           borderColor: PALETA.pink,
           backgroundColor: PALETA.pinkBg,
           borderWidth: 3,
-          pointRadius: 5,
-          pointHoverRadius: 7,
+          pointRadius: 4,
+          pointHoverRadius: 6,
           pointBackgroundColor: PALETA.pink,
           pointBorderColor: '#fff',
           pointBorderWidth: 2,
           cubicInterpolationMode: 'monotone',
           tension: 0.45,
-          fill: true
+          fill: false
+        },
+        {
+          label: 'Qtd — Dentro',
+          data: series.dentroQtd,
+          borderColor: PALETA.mint,
+          backgroundColor: PALETA.mintBg,
+          borderWidth: 2,
+          pointRadius: 3,
+          pointHoverRadius: 5,
+          pointBackgroundColor: PALETA.mint,
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          cubicInterpolationMode: 'monotone',
+          tension: 0.45,
+          borderDash: [6, 4],
+          fill: false
+        },
+        {
+          label: 'Qtd — Fora',
+          data: series.foraQtd,
+          borderColor: PALETA.orange,
+          backgroundColor: PALETA.orangeBg,
+          borderWidth: 2,
+          pointRadius: 3,
+          pointHoverRadius: 5,
+          pointBackgroundColor: PALETA.orange,
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          cubicInterpolationMode: 'monotone',
+          tension: 0.45,
+          borderDash: [6, 4],
+          fill: false
         }
       ]
     },
@@ -322,7 +332,7 @@ function buildChartOperacional() {
   const ctx = document.getElementById('chartOpDiario');
   if (!ctx) return;
 
-  const series = getCampaignSeries(campaignView);
+  const series = getFullCampaignSeries();
 
   chartInstances.chartOpDiario = new Chart(ctx, {
     type: 'line',
@@ -330,32 +340,62 @@ function buildChartOperacional() {
       labels: series.labels,
       datasets: [
         {
-          label: `Clientes — ${campaignView}`,
-          data: series.clientes,
+          label: 'Clientes — Dentro',
+          data: series.dentroClientes,
           borderColor: PALETA.lilac,
           backgroundColor: PALETA.lilacBg,
           borderWidth: 3,
-          pointRadius: 6,
+          pointRadius: 4,
           pointBackgroundColor: PALETA.lilac,
           pointBorderColor: '#fff',
           pointBorderWidth: 2,
           cubicInterpolationMode: 'monotone',
           tension: 0.45,
-          fill: true
+          fill: false
         },
         {
-          label: `Qtd — ${campaignView}`,
-          data: series.qtd,
+          label: 'Clientes — Fora',
+          data: series.foraClientes,
+          borderColor: PALETA.pink,
+          backgroundColor: PALETA.pinkBg,
+          borderWidth: 3,
+          pointRadius: 4,
+          pointBackgroundColor: PALETA.pink,
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          cubicInterpolationMode: 'monotone',
+          tension: 0.45,
+          fill: false
+        },
+        {
+          label: 'Qtd — Dentro',
+          data: series.dentroQtd,
+          borderColor: PALETA.mint,
+          backgroundColor: PALETA.mintBg,
+          borderWidth: 2,
+          pointRadius: 3,
+          pointBackgroundColor: PALETA.mint,
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          cubicInterpolationMode: 'monotone',
+          tension: 0.45,
+          borderDash: [6, 4],
+          fill: false
+        },
+        {
+          label: 'Qtd — Fora',
+          data: series.foraQtd,
           borderColor: PALETA.orange,
           backgroundColor: PALETA.orangeBg,
-          borderWidth: 3,
-          pointRadius: 6,
+          borderWidth: 2,
+          pointRadius: 3,
           pointBackgroundColor: PALETA.orange,
           pointBorderColor: '#fff',
           pointBorderWidth: 2,
           cubicInterpolationMode: 'monotone',
           tension: 0.45,
-          fill: true
+          borderDash: [6, 4],
+          fill: false
         }
       ]
     },
@@ -394,17 +434,14 @@ function buildDonutParticipacao() {
   const legend = document.getElementById('operacionalLegend');
   if (!ctx || !legend) return;
 
-  const value = campaignView === 'Dentro'
-    ? TOTAIS.clientesDentro
-    : TOTAIS.clientesForaBase;
-
-  const remainder = TOTAIS.clientesTotalBase - value;
+  const value = TOTAIS.clientesDentro;
+  const remainder = TOTAIS.clientesForaBase;
   const pct = (value / TOTAIS.clientesTotalBase) * 100;
 
   chartInstances.chartOpParticipacao = new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels: [campaignView, 'Restante da base'],
+      labels: ['Dentro', 'Fora'],
       datasets: [{
         data: [value, remainder],
         backgroundColor: [PALETA.lilac, '#f5ead8'],
@@ -430,8 +467,8 @@ function buildDonutParticipacao() {
   });
 
   legend.innerHTML = `
-    <span class="dot dot-purple"></span><span>${campaignView} <strong>${fmtPct(pct, 1)}</strong></span>
-    <span class="dot dot-cream"></span><span>Restante <strong>${fmtPct(100 - pct, 1)}</strong></span>
+    <span class="dot dot-purple"></span><span>Dentro <strong>${fmtPct(pct, 1)}</strong></span>
+    <span class="dot dot-cream"></span><span>Fora <strong>${fmtPct(100 - pct, 1)}</strong></span>
   `;
 }
 
@@ -877,7 +914,6 @@ function buildCRMInsights() {
 // ═══════════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
-  initViewButtons();
   renderVisaoGeral();
   animateCounters();
 });
