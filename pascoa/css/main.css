@@ -503,16 +503,47 @@ body {
   gap: 1rem;
 }
 
-.podio-item.first {
-  height: 120px;
+.podio-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid rgba(195,122,48,0.10);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 0.75rem 0.6rem 0.55rem;
+  text-align: center;
+  transition: transform 0.25s;
+  width: 220px;
 }
 
+.podio-item:hover {
+  transform: translateY(-4px);
+}
+
+/* 2º lugar */
 .podio-item.second {
-  height: 100px;
+  order: 1;
+  min-height: 260px;
 }
 
+/* 1º lugar */
+.podio-item.first {
+  order: 2;
+  min-height: 300px;
+  transform: translateY(-18px);
+  z-index: 2;
+}
+
+/* 3º lugar */
 .podio-item.third {
-  height: 90px;
+  order: 3;
+  min-height: 240px;
+}
+
+.podio-item.first:hover {
+  transform: translateY(-22px);
 }
 
 .podio-img-wrap {
