@@ -147,7 +147,6 @@ function getCampaignSeries(view) {
     clientes: EVOLUCAO_DIARIA_GERAL.map(d => d.clientes)
   };
 }
-
 // ═══════════════════════════════════════════════════════════════
 //  VISÃO GERAL
 // ═══════════════════════════════════════════════════════════════
