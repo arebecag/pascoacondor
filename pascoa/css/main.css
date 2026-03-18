@@ -503,6 +503,7 @@ body {
   gap: 1rem;
 }
 
+/* base dos cards */
 .podio-item {
   display: flex;
   flex-direction: column;
@@ -510,42 +511,42 @@ body {
   gap: 6px;
   background: #ffffff;
   border: 1px solid rgba(195,122,48,0.10);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow);
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(61,26,0,0.07);
   padding: 0.75rem 0.6rem 0.55rem;
   text-align: center;
   transition: transform 0.25s;
   width: 220px;
 }
 
-.podio-item:hover {
-  transform: translateY(-4px);
-}
-
-/* 2º lugar */
-.podio-item.second {
-  order: 1;
-  min-height: 260px;
-}
-
-/* 1º lugar */
-.podio-item.first {
+/* 🥇 1º lugar (MEIO + MAIS ALTO) */
+.podio-item:nth-child(2) {
   order: 2;
   min-height: 300px;
   transform: translateY(-18px);
   z-index: 2;
 }
 
-/* 3º lugar */
-.podio-item.third {
+/* 🥈 2º lugar (ESQUERDA) */
+.podio-item:nth-child(1) {
+  order: 1;
+  min-height: 260px;
+}
+
+/* 🥉 3º lugar (DIREITA) */
+.podio-item:nth-child(3) {
   order: 3;
   min-height: 240px;
 }
 
-.podio-item.first:hover {
-  transform: translateY(-22px);
+/* hover bonito */
+.podio-item:hover {
+  transform: translateY(-6px);
 }
 
+.podio-item:nth-child(2):hover {
+  transform: translateY(-22px);
+}
 .podio-img-wrap {
   position: relative;
   width: 70px;
