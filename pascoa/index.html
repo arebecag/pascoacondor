@@ -1,1018 +1,555 @@
-diff --git a/pascoa/index.html b/pascoa/index.html
-index 6002f24b523b7f7d771223521b97c6073e2cac20..c7a6cb95d681c0f940388cb75221d5f71793e4b1 100644
---- a/pascoa/index.html
-+++ b/pascoa/index.html
-@@ -1,590 +1,531 @@
- <!DOCTYPE html>
- <html lang="pt-BR">
- <head>
-   <meta charset="UTF-8" />
-   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <title>Dashboard Páscoa — Caça aos Coelhos | Condor</title>
-+
-   <link rel="preconnect" href="https://fonts.googleapis.com" />
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
--  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
--  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" />
-+  <link
-+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-+    rel="stylesheet"
-+  />
-+  <link
-+    rel="stylesheet"
-+    href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css"
-+  />
-   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
-   <link rel="stylesheet" href="css/main.css" />
- </head>
- <body>
- 
--<!-- CHOCOLATE DRIP TOP BAR -->
--<div class="choco-drip-bar">
--  <div class="drip-container">
--    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
--      <rect width="1440" height="20" fill="#3d1a00"/>
--      <path d="M0,20 Q30,50 60,20 Q90,50 120,20 Q150,50 180,20 Q210,50 240,20 Q270,50 300,20 Q330,50 360,20 Q390,50 420,20 Q450,50 480,20 Q510,50 540,20 Q570,50 600,20 Q630,50 660,20 Q690,50 720,20 Q750,50 780,20 Q810,50 840,20 Q870,50 900,20 Q930,50 960,20 Q990,50 1020,20 Q1050,50 1080,20 Q1110,50 1140,20 Q1170,50 1200,20 Q1230,50 1260,20 Q1290,50 1320,20 Q1350,50 1380,20 Q1410,50 1440,20 L1440,0 L0,0 Z" fill="#3d1a00"/>
--      <!-- drip drops -->
--      <ellipse cx="90" cy="42" rx="8" ry="14" fill="#5c2a00"/>
--      <ellipse cx="220" cy="48" rx="7" ry="18" fill="#5c2a00"/>
--      <ellipse cx="360" cy="44" rx="9" ry="16" fill="#5c2a00"/>
--      <ellipse cx="500" cy="52" rx="7" ry="20" fill="#5c2a00"/>
--      <ellipse cx="640" cy="46" rx="8" ry="15" fill="#5c2a00"/>
--      <ellipse cx="780" cy="50" rx="9" ry="19" fill="#5c2a00"/>
--      <ellipse cx="920" cy="43" rx="7" ry="13" fill="#5c2a00"/>
--      <ellipse cx="1060" cy="51" rx="8" ry="18" fill="#5c2a00"/>
--      <ellipse cx="1200" cy="45" rx="9" ry="15" fill="#5c2a00"/>
--      <ellipse cx="1360" cy="49" rx="7" ry="17" fill="#5c2a00"/>
--    </svg>
--  </div>
--</div>
--
--<!-- LAYOUT WRAPPER -->
--<div class="app-wrapper">
--
--  <!-- SIDEBAR -->
--  <aside class="sidebar" id="sidebar">
--    <div class="sidebar-bg-art">
--      <img src="assets/img/bg-cenario.png" alt="" class="sidebar-bg-img" />
--    </div>
--
--    <div class="sidebar-inner">
--      <!-- Logo/Lockup -->
--      <div class="sidebar-logo">
--        <img src="assets/img/lockup-pascoa.png" alt="Páscoa Condor Premia" class="lockup-img" />
--      </div>
-+  <div class="app-wrapper">
- 
--      <!-- Badge -->
--      <div class="sidebar-badge">
--        <img src="assets/img/badge-maior-pascoa.png" alt="A Maior Páscoa do Brasil" class="badge-img" />
-+    <!-- SIDEBAR -->
-+    <aside class="sidebar" id="sidebar">
-+      <div class="sidebar-bg-art">
-+        <img src="assets/img/bg-cenario.png" alt="" class="sidebar-bg-img" />
-       </div>
- 
--      <!-- Update info -->
--      <div class="sidebar-meta">
--        <span class="meta-dot"></span>
--        <span>Atualização: 14/03/2026</span>
--      </div>
--
--      <!-- Nav -->
--      <nav class="sidebar-nav">
--        <p class="nav-label">SEÇÕES</p>
--        <a href="#" class="nav-item active" data-section="visao-geral">
--          <i class="fas fa-chart-pie"></i>
--          <span>Visão Geral</span>
--        </a>
--        <a href="#" class="nav-item" data-section="visao-operacional">
--          <i class="fas fa-store"></i>
--          <span>Visão Operacional</span>
--        </a>
--        <a href="#" class="nav-item" data-section="ranking">
--          <i class="fas fa-trophy"></i>
--          <span>Ranking Produtos</span>
--        </a>
--        <a href="#" class="nav-item" data-section="produtos-campanha">
--          <i class="fas fa-egg"></i>
--          <span>Produtos Campanha</span>
--        </a>
--        <a href="#" class="nav-item" data-section="operacional-crm">
--          <i class="fas fa-users-gear"></i>
--          <span>Operacional CRM</span>
--        </a>
--      </nav>
--
--      <!-- Rabbit icon -->
--      <div class="sidebar-rabbit">
--        <i class="fas fa-rabbit" style="font-size:2.5rem; color: rgba(255,255,255,0.18);"></i>
--        <span>🐰 Caça aos Coelhos</span>
--      </div>
--    </div>
--  </aside>
--
--  <!-- MAIN CONTENT -->
--  <main class="main-content" id="mainContent">
--
--    <!-- ===================== VISÃO GERAL ===================== -->
--    <section class="page-section active" id="visao-geral">
--
--      <!-- HERO BANNER -->
--      <div class="hero-banner">
--        <img src="assets/img/hero-banner.jpg" alt="Páscoa Condor Premia" class="hero-img" />
--        <div class="hero-overlay">
--          <img src="assets/img/frame-chocolate.png" alt="" class="hero-frame" />
--          <div class="hero-text">
--            <h1>Páscoa — Caça aos Coelhos</h1>
--            <p>Escaneie o produto · libere a promoção · ganhe!</p>
--          </div>
-+      <div class="sidebar-inner">
-+        <div class="sidebar-logo">
-+          <img
-+            src="assets/img/lockup-pascoa.png"
-+            alt="Páscoa Condor Premia"
-+            class="lockup-img"
-+          />
-         </div>
--      </div>
- 
--      <!-- KPI CARDS ROW -->
--      <div class="kpi-row">
--        <div class="kpi-card kpi-purple">
--          <div class="kpi-icon"><i class="fas fa-users"></i></div>
--          <div class="kpi-info">
--            <span class="kpi-label">Clientes Atingidos</span>
--            <span class="kpi-value" data-count="1322">0</span>
--            <span class="kpi-sub">na campanha (Dentro)</span>
--          </div>
-+        <div class="sidebar-badge">
-+          <img
-+            src="assets/img/badge-maior-pascoa.png"
-+            alt="A Maior Páscoa do Brasil"
-+            class="badge-img"
-+          />
-         </div>
--        <div class="kpi-card kpi-green">
--          <div class="kpi-icon"><i class="fas fa-receipt"></i></div>
--          <div class="kpi-info">
--            <span class="kpi-label">Cupons na Campanha</span>
--            <span class="kpi-value" data-count="1410">0</span>
--            <span class="kpi-sub">cupons únicos</span>
--          </div>
--        </div>
--        <div class="kpi-card kpi-orange">
--          <div class="kpi-icon"><i class="fas fa-box"></i></div>
--          <div class="kpi-info">
--            <span class="kpi-label">Itens Vendidos</span>
--            <span class="kpi-value" data-count="2547">0</span>
--            <span class="kpi-sub">unidades na campanha</span>
--          </div>
--        </div>
--        <div class="kpi-card kpi-pink">
--          <div class="kpi-icon"><i class="fas fa-store"></i></div>
--          <div class="kpi-info">
--            <span class="kpi-label">Lojas com Vendas</span>
--            <span class="kpi-value" data-count="17">0</span>
--            <span class="kpi-sub">filiais ativas</span>
--          </div>
-+
-+        <div class="sidebar-meta">
-+          <span class="meta-dot"></span>
-+          <span>Atualização: 17/03/2026</span>
-         </div>
-+
-+        <nav class="sidebar-nav">
-+          <p class="nav-label">SEÇÕES</p>
-+
-+          <a href="#" class="nav-item active" data-section="visao-geral">
-+            <i class="fas fa-chart-pie"></i>
-+            <span>Visão Geral</span>
-+          </a>
-+
-+          <a href="#" class="nav-item" data-section="visao-operacional">
-+            <i class="fas fa-store"></i>
-+            <span>Visão Operacional</span>
-+          </a>
-+
-+          <a href="#" class="nav-item" data-section="ranking">
-+            <i class="fas fa-trophy"></i>
-+            <span>Ranking Produtos</span>
-+          </a>
-+
-+          <a href="#" class="nav-item" data-section="produtos-campanha">
-+            <i class="fas fa-egg"></i>
-+            <span>Produtos Campanha</span>
-+          </a>
-+
-+          <a href="#" class="nav-item" data-section="operacional-crm">
-+            <i class="fas fa-users-gear"></i>
-+            <span>Operacional CRM</span>
-+          </a>
-+        </nav>
-       </div>
-+    </aside>
- 
--      <!-- GRÁFICOS ROW: Evolução Diária (esq) + Donut Clientes (dir) -->
--      <div class="charts-row-geral">
--        <!-- Evolução diária (linha) -->
--        <div class="chart-card chart-card-wide">
--          <div class="chart-header">
--            <h3><i class="fas fa-chart-line"></i> Evolução Diária — Campanha</h3>
--            <p class="chart-sub">Clientes únicos e qtd. de produtos vendidos na campanha por dia (a partir de 12/03)</p>
--          </div>
--          <div class="chart-body" style="height:260px">
--            <canvas id="chartEvolucaoDiaria"></canvas>
--          </div>
-+    <!-- MAIN CONTENT -->
-+    <main class="main-content" id="mainContent">
-+
-+      <!-- ===================== VISÃO GERAL ===================== -->
-+      <section class="page-section active" id="visao-geral">
-+
-+        <!-- COELHO TOPO -->
-+        <div class="rabbit-top-wrap" aria-hidden="true">
-+          <img
-+            src="assets/img/rubbitWaving.gif"
-+            alt="Coelho animado"
-+            class="hero-rabbit"
-+          />
-         </div>
- 
--        <!-- Donut Clientes -->
--        <div class="chart-card chart-card-narrow">
--          <div class="chart-header">
--            <h3><i class="fas fa-circle-half-stroke"></i> Clientes na Campanha</h3>
--            <p class="chart-sub">Dentro vs. Fora da campanha</p>
--          </div>
--          <div class="chart-body" style="height:200px; display:flex; align-items:center; justify-content:center;">
--            <canvas id="chartDonutClientes"></canvas>
--          </div>
--          <div class="donut-legend">
--            <span class="dot dot-purple"></span><span>Dentro <strong>1.322</strong></span>
--            <span class="dot dot-cream"></span><span>Fora <strong>95.844</strong></span>
-+        <!-- KPI CARDS ROW -->
-+        <div class="kpi-row">
-+          <div class="kpi-card kpi-purple">
-+            <div class="kpi-icon"><i class="fas fa-users"></i></div>
-+            <div class="kpi-info">
-+              <span class="kpi-label">Clientes Atingidos</span>
-+              <span class="kpi-value" data-count="4162">0</span>
-+              <span class="kpi-sub">na campanha (Dentro)</span>
-+            </div>
-           </div>
--        </div>
--      </div>
- 
--      <!-- PÓDIO TOP 3 PRODUTOS -->
--      <div class="podio-section">
--        <div class="section-title-bar">
--          <img src="assets/img/badge-maior-pascoa.png" alt="" class="title-badge" />
--          <h2>🏆 Pódio — Top 3 Produtos na Campanha</h2>
--          <span class="rank-by-tag">por quantidade vendida</span>
--        </div>
-+          <div class="kpi-card kpi-green">
-+            <div class="kpi-icon"><i class="fas fa-receipt"></i></div>
-+            <div class="kpi-info">
-+              <span class="kpi-label">Cupons na Campanha</span>
-+              <span class="kpi-value" data-count="4489">0</span>
-+              <span class="kpi-sub">cupons únicos</span>
-+            </div>
-+          </div>
- 
--        <div class="podio-grid">
--          <!-- 2º lugar -->
--          <div class="podio-item podio-2">
--            <div class="podio-img-wrap">
--              <img src="https://sspark.genspark.ai/cfimages?u1=KBuBCc2yMkFg1AWQ6563z5ALNxAJojewrqraVTOV3dxSFiUEVKJh4jMWmZfStJ1mwWSZMMGmj4Psm0kXECDR4PfKBll26gpRQi60kzgeEimSkuH4BDk%3D&u2=1XWAvfeli8zlw85D&width=2560" alt="Laka 80g" class="podio-product-img" onerror="this.src='assets/img/lockup-pascoa.png'" />
-+          <div class="kpi-card kpi-orange">
-+            <div class="kpi-icon"><i class="fas fa-box"></i></div>
-+            <div class="kpi-info">
-+              <span class="kpi-label">Itens Vendidos</span>
-+              <span class="kpi-value" data-count="6616">0</span>
-+              <span class="kpi-sub">unidades na campanha</span>
-             </div>
--            <div class="podio-medal">🥈</div>
--            <div class="podio-bar podio-bar-2"></div>
--            <div class="podio-info">
--              <strong>Choc. Laka 80g</strong>
--              <span class="podio-qty">863 itens</span>
--              <span class="podio-clients">547 clientes</span>
-+          </div>
-+
-+          <div class="kpi-card kpi-pink">
-+            <div class="kpi-icon"><i class="fas fa-store"></i></div>
-+            <div class="kpi-info">
-+              <span class="kpi-label">Lojas com Vendas</span>
-+              <span class="kpi-value" data-count="67">0</span>
-+              <span class="kpi-sub">filiais ativas</span>
-             </div>
-           </div>
-+        </div>
- 
--          <!-- 1º lugar -->
--          <div class="podio-item podio-1">
--            <div class="podio-img-wrap podio-img-crown">
--              <div class="crown-icon">👑</div>
--              <img src="https://sspark.genspark.ai/cfimages?u1=WzACG%2F4YtAYZ1OI7hY2sQPHxsoKeFhsXLFMG9v7Okg2D%2B%2F4oUYyCSejbclETE%2BD4By8%2FMTipDifbx58QfIQGS3dNyA%3D%3D&u2=%2BCgrL01zCpbYbTqA&width=2560" alt="Ao Leite 80g" class="podio-product-img" onerror="this.src='assets/img/lockup-pascoa.png'" />
-+        <!-- GRÁFICOS -->
-+        <div class="charts-row-geral">
-+          <div class="chart-card chart-card-wide">
-+            <div class="chart-header">
-+              <div class="chart-header-row">
-+                <div>
-+                  <h3><i class="fas fa-chart-line"></i> Evolução Diária — Campanha</h3>
-+              <p class="chart-sub">
-+                Clientes e itens na campanha por dia, com visão Dentro / Fora / Total de 13/03 a 17/03
-+              </p>
-+                </div>
-+                <div class="chart-segmented" id="campaignViewToggle">
-+                  <button class="segment-btn active" data-view="dentro">Dentro</button>
-+                  <button class="segment-btn" data-view="fora">Fora</button>
-+                  <button class="segment-btn" data-view="total">Total</button>
-+                </div>
-+              </div>
-             </div>
--            <div class="podio-medal">🥇</div>
--            <div class="podio-bar podio-bar-1"></div>
--            <div class="podio-info">
--              <strong>Choc. Ao Leite 80g</strong>
--              <span class="podio-qty">1.046 itens</span>
--              <span class="podio-clients">453 clientes</span>
-+            <div class="chart-body" style="height:260px">
-+              <canvas id="chartEvolucaoDiaria"></canvas>
-             </div>
-           </div>
- 
--          <!-- 3º lugar -->
--          <div class="podio-item podio-3">
--            <div class="podio-img-wrap">
--              <img src="https://sspark.genspark.ai/cfimages?u1=2bSTl6E4%2F%2Fw0wf6Xes05msd46oGhbB5y9erL8ioz%2B9xjBzuPc3251RaPJ6jnRsZgSBaFUi6KfKKsy5NUlwMB0%2BGCjB3OuudyNc9rb4MeFgT2UDYSfBbDbuOn6v5kQb8LzPvevuWbs5hGeP5FqsXMjI4%3D&u2=iH1Ss8KBqMsjLYEG&width=2560" alt="Shot 80g" class="podio-product-img" onerror="this.src='assets/img/lockup-pascoa.png'" />
-+          <div class="chart-card chart-card-narrow">
-+            <div class="chart-header">
-+              <h3><i class="fas fa-circle-half-stroke"></i> Clientes na Campanha</h3>
-+              <p class="chart-sub">Dentro vs. Fora da campanha</p>
-             </div>
--            <div class="podio-medal">🥉</div>
--            <div class="podio-bar podio-bar-3"></div>
--            <div class="podio-info">
--              <strong>Choc. Shot 80g</strong>
--              <span class="podio-qty">626 itens</span>
--              <span class="podio-clients">437 clientes</span>
-+            <div class="chart-body chart-center-body" style="height:200px">
-+              <canvas id="chartDonutClientes"></canvas>
-+            </div>
-+            <div class="donut-legend">
-+              <span class="dot dot-purple"></span><span>Dentro <strong>4.162</strong></span>
-+              <span class="dot dot-cream"></span><span>Fora <strong>33.674</strong></span>
-             </div>
-           </div>
-         </div>
--      </div>
- 
--    </section>
-+        <!-- PÓDIO -->
-+        <div class="podio-section">
-+          <div class="section-title-bar">
-+            <img src="assets/img/badge-maior-pascoa.png" alt="" class="title-badge" />
-+            <h2>🏆 Pódio — Top 3 Produtos na Campanha</h2>
-+            <span class="rank-by-tag">por quantidade vendida</span>
-+          </div>
-+
-+          <div class="podio-grid">
-+            <div class="podio-item podio-2">
-+              <div class="podio-img-wrap">
-+                <img
-+                  src="assets/img/laka-branco.svg"
-+                  alt="Laka 80g"
-+                  class="podio-product-img"
-+                  onerror="this.src='assets/img/lockup-pascoa.png'"
-+                />
-+              </div>
-+              <div class="podio-medal">🥈</div>
-+              <div class="podio-bar podio-bar-2"></div>
-+              <div class="podio-info">
-+                <strong>Choc. Laka 80g</strong>
-+                <span class="podio-qty">1.688 itens</span>
-+                <span class="podio-clients">1.100 clientes</span>
-+              </div>
-+            </div>
- 
--    <!-- ===================== VISÃO OPERACIONAL ===================== -->
--    <section class="page-section" id="visao-operacional">
--      <div class="section-page-header">
--        <h2><i class="fas fa-store"></i> Visão Operacional</h2>
--        <p>Resumo de execução por dia e por loja · campanha iniciada em 12/03/2026</p>
--      </div>
-+            <div class="podio-item podio-1">
-+              <div class="podio-img-wrap podio-img-crown">
-+                <div class="crown-icon">👑</div>
-+                <img
-+                  src="https://sspark.genspark.ai/cfimages?u1=WzACG%2F4YtAYZ1OI7hY2sQPHxsoKeFhsXLFMG9v7Okg2D%2B%2F4oUYyCSejbclETE%2BD4By8%2FMTipDifbx58QfIQGS3dNyA%3D%3D&u2=%2BCgrL01zCpbYbTqA&width=2560"
-+                  alt="Ao Leite 80g"
-+                  class="podio-product-img"
-+                  onerror="this.src='assets/img/lockup-pascoa.png'"
-+                />
-+              </div>
-+              <div class="podio-medal">🥇</div>
-+              <div class="podio-bar podio-bar-1"></div>
-+              <div class="podio-info">
-+                <strong>Choc. Ao Leite 80g</strong>
-+                <span class="podio-qty">1.873 itens</span>
-+                <span class="podio-clients">951 clientes</span>
-+              </div>
-+            </div>
- 
--      <!-- KPIs operacionais -->
--      <div class="kpi-row">
--        <div class="kpi-card kpi-purple">
--          <div class="kpi-icon"><i class="fas fa-calendar-check"></i></div>
--          <div class="kpi-info">
--            <span class="kpi-label">Dias Ativos</span>
--            <span class="kpi-value">3</span>
--            <span class="kpi-sub">12, 13 e 14/03</span>
-+            <div class="podio-item podio-3">
-+              <div class="podio-img-wrap">
-+                <img
-+                  src="assets/img/shot-amarelo.svg"
-+                  alt="Shot 80g"
-+                  class="podio-product-img"
-+                  onerror="this.src='assets/img/lockup-pascoa.png'"
-+                />
-+              </div>
-+              <div class="podio-medal">🥉</div>
-+              <div class="podio-bar podio-bar-3"></div>
-+              <div class="podio-info">
-+                <strong>Choc. Shot 80g</strong>
-+                <span class="podio-qty">1.328 itens</span>
-+                <span class="podio-clients">958 clientes</span>
-+              </div>
-+            </div>
-           </div>
-         </div>
--        <div class="kpi-card kpi-green">
--          <div class="kpi-icon"><i class="fas fa-user-check"></i></div>
--          <div class="kpi-info">
--            <span class="kpi-label">Clientes Dentro</span>
--            <span class="kpi-value" data-count="1322">0</span>
--            <span class="kpi-sub">únicos atingidos</span>
--          </div>
-+      </section>
-+
-+      <!-- ===================== VISÃO OPERACIONAL ===================== -->
-+      <section class="page-section" id="visao-operacional">
-+        <div class="section-page-header">
-+          <h2><i class="fas fa-store"></i> Visão Operacional</h2>
-+          <p>Resumo de execução por dia e por loja · resumo consolidado por filial · atualização até 17/03/2026</p>
-         </div>
--        <div class="kpi-card kpi-orange">
--          <div class="kpi-icon"><i class="fas fa-building-user"></i></div>
--          <div class="kpi-info">
--            <span class="kpi-label">% Participação</span>
--            <span class="kpi-value">1,37%</span>
--            <span class="kpi-sub">de clientes totais</span>
-+
-+        <div class="kpi-row">
-+          <div class="kpi-card kpi-purple">
-+            <div class="kpi-icon"><i class="fas fa-calendar-check"></i></div>
-+            <div class="kpi-info">
-+              <span class="kpi-label">Dias Ativos</span>
-+              <span class="kpi-value">5</span>
-+              <span class="kpi-sub">13 a 17/03</span>
-+            </div>
-           </div>
--        </div>
--        <div class="kpi-card kpi-pink">
--          <div class="kpi-icon"><i class="fas fa-arrow-trend-up"></i></div>
--          <div class="kpi-info">
--            <span class="kpi-label">Crescimento D13→D14</span>
--            <span class="kpi-value">+299%</span>
--            <span class="kpi-sub">em clientes/dia</span>
-+
-+          <div class="kpi-card kpi-green">
-+            <div class="kpi-icon"><i class="fas fa-user-check"></i></div>
-+            <div class="kpi-info">
-+              <span class="kpi-label">Clientes Dentro</span>
-+              <span class="kpi-value" data-count="4162">0</span>
-+              <span class="kpi-sub">únicos atingidos</span>
-+            </div>
-           </div>
--        </div>
--      </div>
- 
--      <!-- Gráfico de linha: clientes por dia (na campanha) -->
--      <div class="charts-row-op">
--        <div class="chart-card chart-card-wide">
--          <div class="chart-header">
--            <h3><i class="fas fa-chart-line"></i> Clientes e Itens por Dia (Campanha)</h3>
--            <p class="chart-sub">Evolução diária a partir do início da campanha (12/03)</p>
-+          <div class="kpi-card kpi-orange">
-+            <div class="kpi-icon"><i class="fas fa-building-user"></i></div>
-+            <div class="kpi-info">
-+              <span class="kpi-label">% Participação</span>
-+              <span class="kpi-value">11,00%</span>
-+              <span class="kpi-sub">de clientes totais</span>
-+            </div>
-           </div>
--          <div class="chart-body" style="height:250px">
--            <canvas id="chartOpDiario"></canvas>
-+
-+          <div class="kpi-card kpi-pink">
-+            <div class="kpi-icon"><i class="fas fa-arrow-trend-up"></i></div>
-+            <div class="kpi-info">
-+              <span class="kpi-label">Crescimento D16→D17</span>
-+              <span class="kpi-value">+8%</span>
-+              <span class="kpi-sub">em clientes/dia</span>
-+            </div>
-           </div>
-         </div>
- 
--        <div class="chart-card chart-card-narrow">
--          <div class="chart-header">
--            <h3><i class="fas fa-percent"></i> Participação Campanha</h3>
--          </div>
--          <div class="chart-body" style="height:200px; display:flex; align-items:center; justify-content:center;">
--            <canvas id="chartOpParticipacao"></canvas>
-+        <div class="charts-row-op">
-+          <div class="chart-card chart-card-wide">
-+            <div class="chart-header">
-+              <h3><i class="fas fa-chart-line"></i> Performance Diária da Campanha</h3>
-+              <p class="chart-sub">Curva consolidada dos resultados da campanha entre 13/03 e 17/03</p>
-+            </div>
-+            <div class="chart-body" style="height:250px">
-+              <canvas id="chartOpDiario"></canvas>
-+            </div>
-           </div>
--          <div class="donut-legend">
--            <span class="dot dot-purple"></span><span>Atingidos <strong>1,37%</strong></span>
--            <span class="dot dot-cream"></span><span>Gap <strong>98,63%</strong></span>
-+
-+          <div class="chart-card chart-card-narrow">
-+            <div class="chart-header">
-+              <h3><i class="fas fa-percent"></i> Participação Campanha</h3>
-+            </div>
-+            <div class="chart-body chart-center-body" style="height:200px">
-+              <canvas id="chartOpParticipacao"></canvas>
-+            </div>
-+            <div class="donut-legend">
-+              <span class="dot dot-purple"></span><span>Atingidos <strong>11,00%</strong></span>
-+              <span class="dot dot-cream"></span><span>Gap <strong>89,00%</strong></span>
-+            </div>
-           </div>
-         </div>
--      </div>
- 
--      <!-- Resumo por dia separado por loja -->
--      <div class="section-title-bar" style="margin-top:2rem">
--        <h2>📅 Resumo por Dia e por Loja</h2>
--      </div>
--
--      <!-- Dia 12/03 -->
--      <div class="day-block">
--        <div class="day-header day-header-12">
--          <div class="day-title">
--            <i class="fas fa-flag-checkered"></i>
--            <span>12/03/2026 — Inauguração da Campanha</span>
--          </div>
--          <div class="day-totals">
--            <span class="day-badge"><i class="fas fa-users"></i> ~265 clientes</span>
--            <span class="day-badge"><i class="fas fa-box"></i> ~758 itens</span>
--          </div>
-+        <div class="section-title-bar" style="margin-top:2rem">
-+          <h2>🏬 Ranking Consolidado de Filiais</h2>
-+          <span class="rank-by-tag">13/03 a 17/03 · clientes, cupons e itens</span>
-         </div>
--        <div class="table-scroll">
--          <table class="loja-table" id="tabelaDia12">
-+
-+        <div class="operational-highlight-grid" id="operationalHighlightGrid"></div>
-+
-+        <div class="rank-table-wrap">
-+          <table class="rank-table loja-table" id="tabelaFiliaisConsolidado">
-             <thead>
-               <tr>
--                <th>Loja</th>
-+                <th>#</th>
-+                <th>Filial</th>
-                 <th>Clientes</th>
-                 <th>Cupons</th>
-                 <th>Itens</th>
-+                <th>Share Itens</th>
-               </tr>
-             </thead>
--            <tbody id="tbodyDia12"></tbody>
-+            <tbody id="tbodyFiliaisConsolidado"></tbody>
-           </table>
-         </div>
--      </div>
-+      </section>
- 
--      <!-- Dia 13/03 -->
--      <div class="day-block">
--        <div class="day-header day-header-13">
--          <div class="day-title">
--            <i class="fas fa-calendar-day"></i>
--            <span>13/03/2026</span>
--          </div>
--          <div class="day-totals">
--            <span class="day-badge"><i class="fas fa-users"></i> 265 clientes</span>
--            <span class="day-badge"><i class="fas fa-box"></i> 758 itens</span>
--          </div>
-+      <!-- ===================== RANKING PRODUTOS ===================== -->
-+      <section class="page-section" id="ranking">
-+        <div class="section-page-header">
-+          <h2><i class="fas fa-trophy"></i> Ranking de Produtos</h2>
-+          <p>Ordenado por quantidade vendida na campanha · todos os produtos em promoção</p>
-         </div>
--        <div class="table-scroll">
--          <table class="loja-table" id="tabelaDia13">
--            <thead>
--              <tr>
--                <th>Loja</th>
--                <th>Clientes</th>
--                <th>Cupons</th>
--                <th>Itens</th>
--              </tr>
--            </thead>
--            <tbody id="tbodyDia13"></tbody>
--          </table>
-+
-+        <div class="rank-toggle">
-+          <button class="toggle-btn active" data-metric="itens">Quantidade</button>
-+          <button class="toggle-btn" data-metric="clientes">Clientes</button>
-         </div>
--      </div>
- 
--      <!-- Dia 14/03 -->
--      <div class="day-block">
--        <div class="day-header day-header-14">
--          <div class="day-title">
--            <i class="fas fa-star"></i>
--            <span>14/03/2026 — Melhor Dia</span>
-+        <div class="chart-card" style="margin-bottom:1.5rem">
-+          <div class="chart-header">
-+            <h3><i class="fas fa-chart-bar"></i> Top Produtos na Campanha</h3>
-           </div>
--          <div class="day-totals">
--            <span class="day-badge best-badge"><i class="fas fa-users"></i> 1.057 clientes</span>
--            <span class="day-badge best-badge"><i class="fas fa-box"></i> 1.789 itens</span>
-+          <div class="chart-body" style="height:320px">
-+            <canvas id="chartRankingBar"></canvas>
-           </div>
-         </div>
--        <div class="table-scroll">
--          <table class="loja-table" id="tabelaDia14">
-+
-+        <div class="rank-table-wrap">
-+          <table class="rank-table" id="rankTable">
-             <thead>
-               <tr>
--                <th>Loja</th>
-+                <th>#</th>
-+                <th>Produto</th>
-+                <th>Itens</th>
-                 <th>Clientes</th>
-                 <th>Cupons</th>
--                <th>Itens</th>
-+                <th>Share Itens</th>
-               </tr>
-             </thead>
--            <tbody id="tbodyDia14"></tbody>
-+            <tbody id="rankTableBody"></tbody>
-           </table>
-         </div>
--      </div>
--
--    </section>
- 
--    <!-- ===================== RANKING PRODUTOS ===================== -->
--    <section class="page-section" id="ranking">
--      <div class="section-page-header">
--        <h2><i class="fas fa-trophy"></i> Ranking de Produtos</h2>
--        <p>Ordenado por quantidade vendida na campanha · todos os produtos em promoção</p>
--      </div>
--
--      <!-- Toggle: qtd / clientes -->
--      <div class="rank-toggle">
--        <button class="toggle-btn active" data-metric="itens">Quantidade</button>
--        <button class="toggle-btn" data-metric="clientes">Clientes</button>
--      </div>
--
--      <!-- Gráfico horizontal ranking -->
--      <div class="chart-card" style="margin-bottom:1.5rem">
--        <div class="chart-header">
--          <h3><i class="fas fa-chart-bar"></i> Top Produtos na Campanha</h3>
-+        <div class="section-title-bar" style="margin-top:2rem">
-+          <h2>📅 Melhor Produto por Dia</h2>
-         </div>
--        <div class="chart-body" style="height:320px">
--          <canvas id="chartRankingBar"></canvas>
-+        <div class="best-day-grid" id="bestDayGrid"></div>
-+      </section>
-+
-+      <!-- ===================== PRODUTOS CAMPANHA ===================== -->
-+      <section class="page-section" id="produtos-campanha">
-+        <div class="section-page-header">
-+          <h2><i class="fas fa-egg"></i> Produtos da Campanha</h2>
-+          <p>Mapa completo dos 19 produtos em promoção na Caça aos Coelhos</p>
-         </div>
--      </div>
- 
--      <!-- Tabela de ranking -->
--      <div class="rank-table-wrap">
--        <table class="rank-table" id="rankTable">
--          <thead>
--            <tr>
--              <th>#</th>
--              <th>Produto</th>
--              <th>Itens</th>
--              <th>Clientes</th>
--              <th>Cupons</th>
--              <th>Share Itens</th>
--            </tr>
--          </thead>
--          <tbody id="rankTableBody"></tbody>
--        </table>
--      </div>
--
--      <!-- Melhor produto por dia -->
--      <div class="section-title-bar" style="margin-top:2rem">
--        <h2>📅 Melhor Produto por Dia</h2>
--      </div>
--      <div class="best-day-grid" id="bestDayGrid"></div>
-+        <div class="search-bar-wrap">
-+          <i class="fas fa-search"></i>
-+          <input
-+            type="text"
-+            id="productSearch"
-+            placeholder="Buscar produto..."
-+            class="search-input"
-+          />
-+        </div>
- 
--    </section>
-+        <div class="products-grid" id="productsGrid"></div>
- 
--    <!-- ===================== PRODUTOS CAMPANHA ===================== -->
--    <section class="page-section" id="produtos-campanha">
--      <div class="section-page-header">
--        <h2><i class="fas fa-egg"></i> Produtos da Campanha</h2>
--        <p>Mapa completo dos 19 produtos em promoção na Caça aos Coelhos</p>
--      </div>
-+        <div class="section-title-bar" style="margin-top:2rem">
-+          <h2>📋 Tabela De-Para (IDs → Produto → Oferta)</h2>
-+        </div>
- 
--      <!-- Busca -->
--      <div class="search-bar-wrap">
--        <i class="fas fa-search"></i>
--        <input type="text" id="productSearch" placeholder="Buscar produto..." class="search-input" />
--      </div>
-+        <div class="table-scroll">
-+          <table class="rank-table" id="prodTable">
-+            <thead>
-+              <tr>
-+                <th>ID</th>
-+                <th>Nome</th>
-+                <th>Preço Original</th>
-+                <th>Preço Oferta</th>
-+                <th>Desconto</th>
-+                <th>Status</th>
-+              </tr>
-+            </thead>
-+            <tbody id="prodTableBody"></tbody>
-+          </table>
-+        </div>
-+      </section>
- 
--      <!-- Grid de cards de produtos -->
--      <div class="products-grid" id="productsGrid"></div>
-+      <!-- ===================== OPERACIONAL CRM ===================== -->
-+      <section class="page-section" id="operacional-crm">
-+        <div class="section-page-header">
-+          <h2><i class="fas fa-users-gear"></i> Operacional CRM</h2>
-+          <p>Visão de clientes, engajamento e cobertura da campanha</p>
-+        </div>
- 
--      <!-- Tabela de-para -->
--      <div class="section-title-bar" style="margin-top:2rem">
--        <h2>📋 Tabela De-Para (IDs → Produto → Oferta)</h2>
--      </div>
--      <div class="table-scroll">
--        <table class="rank-table" id="prodTable">
--          <thead>
--            <tr>
--              <th>ID</th>
--              <th>Nome</th>
--              <th>Preço Original</th>
--              <th>Preço Oferta</th>
--              <th>Desconto</th>
--              <th>Status</th>
--            </tr>
--          </thead>
--          <tbody id="prodTableBody"></tbody>
--        </table>
--      </div>
--    </section>
-+        <div class="kpi-row">
-+          <div class="kpi-card kpi-purple">
-+            <div class="kpi-icon"><i class="fas fa-users"></i></div>
-+            <div class="kpi-info">
-+              <span class="kpi-label">Base Total de Clientes</span>
-+              <span class="kpi-value" data-count="96615">0</span>
-+              <span class="kpi-sub">clientes únicos período</span>
-+            </div>
-+          </div>
- 
--    <!-- ===================== OPERACIONAL CRM ===================== -->
--    <section class="page-section" id="operacional-crm">
--      <div class="section-page-header">
--        <h2><i class="fas fa-users-gear"></i> Operacional CRM</h2>
--        <p>Visão de clientes, engajamento e cobertura da campanha</p>
--      </div>
-+          <div class="kpi-card kpi-green">
-+            <div class="kpi-icon"><i class="fas fa-user-check"></i></div>
-+            <div class="kpi-info">
-+              <span class="kpi-label">Clientes Atingidos</span>
-+              <span class="kpi-value" data-count="4162">0</span>
-+              <span class="kpi-sub">compraram na campanha</span>
-+            </div>
-+          </div>
- 
--      <!-- KPIs CRM -->
--      <div class="kpi-row">
--        <div class="kpi-card kpi-purple">
--          <div class="kpi-icon"><i class="fas fa-users"></i></div>
--          <div class="kpi-info">
--            <span class="kpi-label">Base Total de Clientes</span>
--            <span class="kpi-value" data-count="96615">0</span>
--            <span class="kpi-sub">clientes únicos período</span>
-+          <div class="kpi-card kpi-orange">
-+            <div class="kpi-icon"><i class="fas fa-user-xmark"></i></div>
-+            <div class="kpi-info">
-+              <span class="kpi-label">Não Atingidos</span>
-+              <span class="kpi-value" data-count="95293">0</span>
-+              <span class="kpi-sub">gap de cobertura</span>
-+            </div>
-           </div>
--        </div>
--        <div class="kpi-card kpi-green">
--          <div class="kpi-icon"><i class="fas fa-user-check"></i></div>
--          <div class="kpi-info">
--            <span class="kpi-label">Clientes Atingidos</span>
--            <span class="kpi-value" data-count="1322">0</span>
--            <span class="kpi-sub">compraram na campanha</span>
-+
-+          <div class="kpi-card kpi-pink">
-+            <div class="kpi-icon"><i class="fas fa-link"></i></div>
-+            <div class="kpi-info">
-+              <span class="kpi-label">Overlap</span>
-+              <span class="kpi-value" data-count="551">0</span>
-+              <span class="kpi-sub">clientes dentro + fora</span>
-+            </div>
-           </div>
-         </div>
--        <div class="kpi-card kpi-orange">
--          <div class="kpi-icon"><i class="fas fa-user-xmark"></i></div>
--          <div class="kpi-info">
--            <span class="kpi-label">Não Atingidos</span>
--            <span class="kpi-value" data-count="95293">0</span>
--            <span class="kpi-sub">gap de cobertura</span>
-+
-+        <div class="charts-row-geral">
-+          <div class="chart-card chart-card-wide">
-+            <div class="chart-header">
-+              <h3><i class="fas fa-chart-line"></i> Evolução de Clientes Únicos/Dia (Geral)</h3>
-+              <p class="chart-sub">Todos os clientes que compraram no período 01–14/03</p>
-+            </div>
-+            <div class="chart-body" style="height:250px">
-+              <canvas id="chartCRMDiario"></canvas>
-+            </div>
-           </div>
--        </div>
--        <div class="kpi-card kpi-pink">
--          <div class="kpi-icon"><i class="fas fa-link"></i></div>
--          <div class="kpi-info">
--            <span class="kpi-label">Overlap</span>
--            <span class="kpi-value" data-count="551">0</span>
--            <span class="kpi-sub">clientes dentro + fora</span>
-+
-+          <div class="chart-card chart-card-narrow">
-+            <div class="chart-header">
-+              <h3><i class="fas fa-funnel-dollar"></i> Funil de Cobertura</h3>
-+            </div>
-+            <div class="chart-body chart-center-body" style="height:220px">
-+              <canvas id="chartCRMFunil"></canvas>
-+            </div>
-           </div>
-         </div>
--      </div>
- 
--      <!-- Gráficos CRM -->
--      <div class="charts-row-geral">
--        <div class="chart-card chart-card-wide">
--          <div class="chart-header">
--            <h3><i class="fas fa-chart-line"></i> Evolução de Clientes Únicos/Dia (Geral)</h3>
--            <p class="chart-sub">Todos os clientes que compraram no período 01–14/03</p>
--          </div>
--          <div class="chart-body" style="height:250px">
--            <canvas id="chartCRMDiario"></canvas>
--          </div>
-+        <div class="section-title-bar" style="margin-top:2rem">
-+          <h2>📅 Clientes Únicos por Dia — Visão Geral</h2>
-         </div>
- 
--        <div class="chart-card chart-card-narrow">
--          <div class="chart-header">
--            <h3><i class="fas fa-funnel-dollar"></i> Funil de Cobertura</h3>
--          </div>
--          <div class="chart-body" style="height:220px; display:flex; align-items:center; justify-content:center;">
--            <canvas id="chartCRMFunil"></canvas>
--          </div>
-+        <div class="table-scroll">
-+          <table class="rank-table" id="crmDayTable">
-+            <thead>
-+              <tr>
-+                <th>Data</th>
-+                <th>Clientes Únicos (Fora)</th>
-+                <th>Clientes Únicos (Dentro)</th>
-+                <th>Total</th>
-+                <th>% Campanha</th>
-+              </tr>
-+            </thead>
-+            <tbody id="crmDayTableBody"></tbody>
-+          </table>
-         </div>
--      </div>
- 
--      <!-- Tabela de clientes por dia (geral) -->
--      <div class="section-title-bar" style="margin-top:2rem">
--        <h2>📅 Clientes Únicos por Dia — Visão Geral</h2>
--      </div>
--      <div class="table-scroll">
--        <table class="rank-table" id="crmDayTable">
--          <thead>
--            <tr>
--              <th>Data</th>
--              <th>Clientes Únicos (Fora)</th>
--              <th>Clientes Únicos (Dentro)</th>
--              <th>Total</th>
--              <th>% Campanha</th>
--            </tr>
--          </thead>
--          <tbody id="crmDayTableBody"></tbody>
--        </table>
--      </div>
-+        <div class="crm-insights" id="crmInsights"></div>
-+      </section>
-+    </main>
-+  </div>
- 
--      <!-- Alerta / Insights -->
--      <div class="crm-insights" id="crmInsights"></div>
--
--    </section>
--
--  </main>
--</div>
--
--<!-- TICKER BAR (rodapé) -->
--<div class="ticker-bar">
--  <div class="ticker-content">
--    <span>🐰 Caça aos Coelhos Condor</span>
--    <span>★ Escaneie e ganhe desconto!</span>
--    <span>★ 19 produtos participantes</span>
--    <span>★ Campanha ativa desde 12/03/2026</span>
--    <span>★ A Maior Páscoa do Brasil!</span>
--    <span>★ Condor Premia</span>
--    <span>🐰 Caça aos Coelhos Condor</span>
--    <span>★ Escaneie e ganhe desconto!</span>
--    <span>★ 19 produtos participantes</span>
--    <span>★ Campanha ativa desde 12/03/2026</span>
--    <span>★ A Maior Páscoa do Brasil!</span>
--    <span>★ Condor Premia</span>
-+  <!-- TICKER BAR -->
-+  <div class="ticker-bar">
-+    <div class="ticker-content">
-+      <span>🐰 Caça aos Coelhos Condor</span>
-+      <span>★ Escaneie e ganhe desconto!</span>
-+      <span>★ 19 produtos participantes</span>
-+      <span>★ Campanha ativa desde 12/03/2026</span>
-+      <span>★ A Maior Páscoa do Brasil!</span>
-+      <span>★ Condor Premia</span>
-+      <span>🐰 Caça aos Coelhos Condor</span>
-+      <span>★ Escaneie e ganhe desconto!</span>
-+      <span>★ 19 produtos participantes</span>
-+      <span>★ Campanha ativa desde 12/03/2026</span>
-+      <span>★ A Maior Páscoa do Brasil!</span>
-+      <span>★ Condor Premia</span>
-+    </div>
-   </div>
--</div>
- 
--<script src="js/data.js"></script>
--<script src="js/app.js"></script>
-+  <script src="js/data.js"></script>
-+  <script src="js/app.js"></script>
- </body>
- </html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Páscoa — Caça aos Coelhos | Condor</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css"
+  />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+  <div class="app-wrapper">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-bg-art">
+        <img src="assets/img/bg-cenario.png" alt="" class="sidebar-bg-img" />
+      </div>
+
+      <div class="sidebar-inner">
+        <div class="sidebar-logo">
+          <img
+            src="assets/img/lockup-pascoa.png"
+            alt="Páscoa Condor Premia"
+            class="lockup-img"
+          />
+        </div>
+
+        <div class="sidebar-badge">
+          <img
+            src="assets/img/badge-maior-pascoa.png"
+            alt="A Maior Páscoa do Brasil"
+            class="badge-img"
+          />
+        </div>
+
+        <div class="sidebar-meta">
+          <span class="meta-dot"></span>
+          <span>Atualização: 14/03/2026</span>
+        </div>
+
+        <nav class="sidebar-nav">
+          <p class="nav-label">SEÇÕES</p>
+
+          <a href="#" class="nav-item active" data-section="visao-geral">
+            <i class="fas fa-chart-pie"></i>
+            <span>Visão Geral</span>
+          </a>
+
+          <a href="#" class="nav-item" data-section="visao-operacional">
+            <i class="fas fa-store"></i>
+            <span>Visão Operacional</span>
+          </a>
+
+          <a href="#" class="nav-item" data-section="ranking">
+            <i class="fas fa-trophy"></i>
+            <span>Ranking Produtos</span>
+          </a>
+
+          <a href="#" class="nav-item" data-section="produtos-campanha">
+            <i class="fas fa-egg"></i>
+            <span>Produtos Campanha</span>
+          </a>
+
+          <a href="#" class="nav-item" data-section="operacional-crm">
+            <i class="fas fa-users-gear"></i>
+            <span>Operacional CRM</span>
+          </a>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content" id="mainContent">
+
+      <!-- ===================== VISÃO GERAL ===================== -->
+      <section class="page-section active" id="visao-geral">
+
+        <!-- COELHO TOPO -->
+        <div class="rabbit-top-wrap" aria-hidden="true">
+          <img
+            src="assets/img/rubbitWaving.gif"
+            alt="Coelho animado"
+            class="hero-rabbit"
+          />
+        </div>
+
+        <!-- KPI CARDS ROW -->
+        <div class="kpi-row">
+          <div class="kpi-card kpi-purple">
+            <div class="kpi-icon"><i class="fas fa-users"></i></div>
+            <div class="kpi-info">
+              <span class="kpi-label">Clientes Atingidos</span>
+              <span class="kpi-value" data-count="3048">0</span>
+              <span class="kpi-sub">na campanha (Dentro)</span>
+            </div>
+          </div>
+
+          <div class="kpi-card kpi-green">
+            <div class="kpi-icon"><i class="fas fa-receipt"></i></div>
+            <div class="kpi-info">
+              <span class="kpi-label">Cupons na Campanha</span>
+              <span class="kpi-value" data-count="3286">0</span>
+              <span class="kpi-sub">cupons únicos</span>
+            </div>
+          </div>
+
+          <div class="kpi-card kpi-orange">
+            <div class="kpi-icon"><i class="fas fa-box"></i></div>
+            <div class="kpi-info">
+              <span class="kpi-label">Itens Vendidos</span>
+              <span class="kpi-value" data-count="4940">0</span>
+              <span class="kpi-sub">unidades na campanha</span>
+            </div>
+          </div>
+
+          <div class="kpi-card kpi-pink">
+            <div class="kpi-icon"><i class="fas fa-store"></i></div>
+            <div class="kpi-info">
+              <span class="kpi-label">Lojas com Vendas</span>
+              <span class="kpi-value" data-count="51">0</span>
+              <span class="kpi-sub">filiais ativas</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- GRÁFICOS -->
+        <div class="charts-row-geral">
+          <div class="chart-card chart-card-wide">
+            <div class="chart-header">
+              <h3><i class="fas fa-chart-line"></i> Evolução Diária — Campanha</h3>
+              <p class="chart-sub">
+                Clientes únicos e qtd. de produtos vendidos na campanha por dia (a partir de 13/03)
+              </p>
+            </div>
+            <div class="chart-body" style="height:260px">
+              <canvas id="chartEvolucaoDiaria"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card chart-card-narrow">
+            <div class="chart-header">
+              <h3><i class="fas fa-circle-half-stroke"></i> Clientes na Campanha</h3>
+              <p class="chart-sub">Dentro vs. Fora da campanha</p>
+            </div>
+            <div class="chart-body chart-center-body" style="height:200px">
+              <canvas id="chartDonutClientes"></canvas>
+            </div>
+            <div class="donut-legend">
+              <span class="dot dot-purple"></span><span>Dentro <strong>3.048</strong></span>
+              <span class="dot dot-cream"></span><span>Fora <strong>27.432</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PÓDIO -->
+        <div class="podio-section">
+          <div class="section-title-bar">
+            <img src="assets/img/badge-maior-pascoa.png" alt="" class="title-badge" />
+            <h2>🏆 Pódio — Top 3 Produtos na Campanha</h2>
+            <span class="rank-by-tag">por quantidade vendida</span>
+          </div>
+
+          <div class="podio-grid">
+            <div class="podio-item podio-2">
+              <div class="podio-img-wrap">
+                <img
+                  src="assets/img/laka-branco.svg"
+                  alt="Laka 80g"
+                  class="podio-product-img"
+                  onerror="this.src='assets/img/lockup-pascoa.png'"
+                />
+              </div>
+              <div class="podio-medal">🥈</div>
+              <div class="podio-bar podio-bar-2"></div>
+              <div class="podio-info">
+                <strong>Choc. Laka 80g</strong>
+                <span class="podio-qty">1.688 itens</span>
+                <span class="podio-clients">1.100 clientes</span>
+              </div>
+            </div>
+
+            <div class="podio-item podio-1">
+              <div class="podio-img-wrap podio-img-crown">
+                <div class="crown-icon">👑</div>
+                <img
+                  src="https://sspark.genspark.ai/cfimages?u1=WzACG%2F4YtAYZ1OI7hY2sQPHxsoKeFhsXLFMG9v7Okg2D%2B%2F4oUYyCSejbclETE%2BD4By8%2FMTipDifbx58QfIQGS3dNyA%3D%3D&u2=%2BCgrL01zCpbYbTqA&width=2560"
+                  alt="Ao Leite 80g"
+                  class="podio-product-img"
+                  onerror="this.src='assets/img/lockup-pascoa.png'"
+                />
+              </div>
+              <div class="podio-medal">🥇</div>
+              <div class="podio-bar podio-bar-1"></div>
+              <div class="podio-info">
+                <strong>Choc. Ao Leite 80g</strong>
+                <span class="podio-qty">1.873 itens</span>
+                <span class="podio-clients">951 clientes</span>
+              </div>
+            </div>
+
+            <div class="podio-item podio-3">
+              <div class="podio-img-wrap">
+                <img
+                  src="assets/img/shot-amarelo.svg"
+                  alt="Shot 80g"
+                  class="podio-product-img"
+                  onerror="this.src='assets/img/lockup-pascoa.png'"
+                />
+              </div>
+              <div class="podio-medal">🥉</div>
+              <div class="podio-bar podio-bar-3"></div>
+              <div class="podio-info">
+                <strong>Choc. Shot 80g</strong>
+                <span class="podio-qty">1.328 itens</span>
+                <span class="podio-clients">958 clientes</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== VISÃO OPERACIONAL ===================== -->
+      <section class="page-section" id="visao-operacional">
+        <div class="section-page-header">
+          <h2><i class="fas fa-store"></i> Visão Operacional</h2>
+          <p>Resumo de execução por dia e por loja · campanha iniciada em 13/03/2026</p>
+        </div>
+
+        <div class="kpi-row">
+          <div class="kpi-card kpi-purple">
+            <div class="kpi-icon"><i class="fas fa-calendar-check"></i></div>
+            <div class="kpi-info">
+              <span class="kpi-label">Dias Ativos</span>
+              <span class="kpi-value">2</span>
+              <span class="kpi-sub">13 e 14/03</span>
+            </div>
+          </div>
+
+          <div class="kpi-card kpi-green">
+            <div class="kpi-icon"><i class="fas fa-user-check"></i></div>
+            <div class="kpi-info">
+              <span class="kpi-label">Clientes Dentro</span>
+              <span class="kpi-value" data-count="3048">0</span>
+              <span class="kpi-sub">únicos atingidos</span>
+            </div>
+          </div>
+
+          <div class="kpi-card kpi-orange">
+            <div class="kpi-icon"><i class="fas fa-building-user"></i></div>
+            <div class="kpi-info">
+              <span class="kpi-label">% Participação</span>
+              <span class="kpi-value">10,00%</span>
+              <span class="kpi-sub">de clientes totais</span>
+            </div>
+          </div>
+
+          <div class="kpi-card kpi-pink">
+            <div class="kpi-icon"><i class="fas fa-arrow-trend-up"></i></div>
+            <div class="kpi-info">
+              <span class="kpi-label">Crescimento D13→D14</span>
+              <span class="kpi-value">+56%</span>
+              <span class="kpi-sub">em clientes/dia</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="charts-row-op">
+          <div class="chart-card chart-card-wide">
+            <div class="chart-header">
+              <h3><i class="fas fa-chart-line"></i> Clientes e Itens por Dia (Campanha)</h3>
+              <p class="chart-sub">Evolução diária a partir do início da campanha (13/03)</p>
+            </div>
+            <div class="chart-body" style="height:250px">
+              <canvas id="chartOpDiario"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card chart-card-narrow">
+            <div class="chart-header">
+              <h3><i class="fas fa-percent"></i> Participação Campanha</h3>
+            </div>
+            <div class="chart-body chart-center-body" style="height:200px">
+              <canvas id="chartOpParticipacao"></canvas>
+            </div>
+            <div class="donut-legend">
+              <span class="dot dot-purple"></span><span>Atingidos <strong>10,00%</strong></span>
+              <span class="dot dot-cream"></span><span>Gap <strong>90,00%</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-title-bar" style="margin-top:2rem">
+          <h2>📅 Resumo por Dia e por Loja</h2>
+        </div>
+
+        <div class="day-block">
+          <div class="day-header day-header-13">
+            <div class="day-title">
+              <i class="fas fa-calendar-day"></i>
+              <span>13/03/2026</span>
+            </div>
+            <div class="day-totals">
+              <span class="day-badge"><i class="fas fa-users"></i> 1.189 clientes</span>
+              <span class="day-badge"><i class="fas fa-box"></i> 1.964 itens</span>
+            </div>
+          </div>
+          <div class="table-scroll">
+            <table class="loja-table" id="tabelaDia13">
+              <thead>
+                <tr>
+                  <th>Loja</th>
+                  <th>Clientes</th>
+                  <th>Cupons</th>
+                  <th>Itens</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyDia13"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="day-block">
+          <div class="day-header day-header-14">
+            <div class="day-title">
+              <i class="fas fa-star"></i>
+              <span>14/03/2026 — Melhor Dia</span>
+            </div>
+            <div class="day-totals">
+              <span class="day-badge best-badge"><i class="fas fa-users"></i> 1.859 clientes</span>
+              <span class="day-badge best-badge"><i class="fas fa-box"></i> 2.976 itens</span>
+            </div>
+          </div>
+          <div class="table-scroll">
+            <table class="loja-table" id="tabelaDia14">
+              <thead>
+                <tr>
+                  <th>Loja</th>
+                  <th>Clientes</th>
+                  <th>Cupons</th>
+                  <th>Itens</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyDia14"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== RANKING PRODUTOS ===================== -->
+      <section class="page-section" id="ranking">
+        <div class="section-page-header">
+          <h2><i class="fas fa-trophy"></i> Ranking de Produtos</h2>
+          <p>Ordenado por quantidade vendida na campanha · todos os produtos em promoção</p>
+        </div>
+
+        <div class="rank-toggle">
+          <button class="toggle-btn active" data-metric="itens">Quantidade</button>
+          <button class="toggle-btn" data-metric="clientes">Clientes</button>
+        </div>
+
+        <div class="chart-card" style="margin-bottom:1.5rem">
+          <div class="chart-header">
+            <h3><i class="fas fa-chart-bar"></i> Top Produtos na Campanha</h3>
+          </div>
+          <div class="chart-body" style="height:320px">
+            <canvas id="chartRankingBar"></canvas>
+          </div>
+        </div>
+
+        <div class="rank-table-wrap">
+          <table class="rank-table" id="rankTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Produto</th>
+                <th>Itens</th>
+                <th>Clientes</th>
+                <th>Cupons</th>
+                <th>Share Itens</th>
+              </tr>
+            </thead>
+            <tbody id="rankTableBody"></tbody>
+          </table>
+        </div>
+
+        <div class="section-title-bar" style="margin-top:2rem">
+          <h2>📅 Melhor Produto por Dia</h2>
+        </div>
+        <div class="best-day-grid" id="bestDayGrid"></div>
+      </section>
+
+      <!-- ===================== PRODUTOS CAMPANHA ===================== -->
+      <section class="page-section" id="produtos-campanha">
+        <div class="section-page-header">
+          <h2><i class="fas fa-egg"></i> Produtos da Campanha</h2>
+          <p>Mapa completo dos 19 produtos em promoção na Caça aos Coelhos</p>
+        </div>
+
+        <div class="search-bar-wrap">
+          <i class="fas fa-search"></i>
+          <input
+            type="text"
+            id="productSearch"
+            placeholder="Buscar produto..."
+            class="search-input"
+          />
+        </div>
+
+        <div class="products-grid" id="productsGrid"></div>
+
+        <div class="section-title-bar" style="margin-top:2rem">
+          <h2>📋 Tabela De-Para (IDs → Produto → Oferta)</h2>
+        </div>
+
+        <div class="table-scroll">
+          <table class="rank-table" id="prodTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Preço Original</th>
+                <th>Preço Oferta</th>
+                <th>Desconto</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="prodTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ===================== OPERACIONAL CRM ===================== -->
+      <section class="page-section" id="operacional-crm">
+        <div class="section-page-header">
+          <h2><i class="fas fa-users-gear"></i> Operacional CRM</h2>
+          <p>Visão de clientes, engajamento e cobertura da campanha</p>
+        </div>
+
+        <div class="kpi-row">
+          <div class="kpi-card kpi-purple">
+            <div class="kpi-icon"><i class="fas fa-users"></i></div>
+            <div class="kpi-info">
+              <span class="kpi-label">Base Total de Clientes</span>
+              <span class="kpi-value" data-count="96615">0</span>
+              <span class="kpi-sub">clientes únicos período</span>
+            </div>
+          </div>
+
+          <div class="kpi-card kpi-green">
+            <div class="kpi-icon"><i class="fas fa-user-check"></i></div>
+            <div class="kpi-info">
+              <span class="kpi-label">Clientes Atingidos</span>
+              <span class="kpi-value" data-count="3048">0</span>
+              <span class="kpi-sub">compraram na campanha</span>
+            </div>
+          </div>
+
+          <div class="kpi-card kpi-orange">
+            <div class="kpi-icon"><i class="fas fa-user-xmark"></i></div>
+            <div class="kpi-info">
+              <span class="kpi-label">Não Atingidos</span>
+              <span class="kpi-value" data-count="95293">0</span>
+              <span class="kpi-sub">gap de cobertura</span>
+            </div>
+          </div>
+
+          <div class="kpi-card kpi-pink">
+            <div class="kpi-icon"><i class="fas fa-link"></i></div>
+            <div class="kpi-info">
+              <span class="kpi-label">Overlap</span>
+              <span class="kpi-value" data-count="551">0</span>
+              <span class="kpi-sub">clientes dentro + fora</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="charts-row-geral">
+          <div class="chart-card chart-card-wide">
+            <div class="chart-header">
+              <h3><i class="fas fa-chart-line"></i> Evolução de Clientes Únicos/Dia (Geral)</h3>
+              <p class="chart-sub">Todos os clientes que compraram no período 01–14/03</p>
+            </div>
+            <div class="chart-body" style="height:250px">
+              <canvas id="chartCRMDiario"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card chart-card-narrow">
+            <div class="chart-header">
+              <h3><i class="fas fa-funnel-dollar"></i> Funil de Cobertura</h3>
+            </div>
+            <div class="chart-body chart-center-body" style="height:220px">
+              <canvas id="chartCRMFunil"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-title-bar" style="margin-top:2rem">
+          <h2>📅 Clientes Únicos por Dia — Visão Geral</h2>
+        </div>
+
+        <div class="table-scroll">
+          <table class="rank-table" id="crmDayTable">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Clientes Únicos (Fora)</th>
+                <th>Clientes Únicos (Dentro)</th>
+                <th>Total</th>
+                <th>% Campanha</th>
+              </tr>
+            </thead>
+            <tbody id="crmDayTableBody"></tbody>
+          </table>
+        </div>
+
+        <div class="crm-insights" id="crmInsights"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- TICKER BAR -->
+  <div class="ticker-bar">
+    <div class="ticker-content">
+      <span>🐰 Caça aos Coelhos Condor</span>
+      <span>★ Escaneie e ganhe desconto!</span>
+      <span>★ 19 produtos participantes</span>
+      <span>★ Campanha ativa desde 12/03/2026</span>
+      <span>★ A Maior Páscoa do Brasil!</span>
+      <span>★ Condor Premia</span>
+      <span>🐰 Caça aos Coelhos Condor</span>
+      <span>★ Escaneie e ganhe desconto!</span>
+      <span>★ 19 produtos participantes</span>
+      <span>★ Campanha ativa desde 12/03/2026</span>
+      <span>★ A Maior Páscoa do Brasil!</span>
+      <span>★ Condor Premia</span>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
