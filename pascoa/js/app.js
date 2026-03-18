@@ -116,11 +116,35 @@ function renderSection(id) {
 }
 
 function getCampaignSeries(view) {
+  const campaignMap = Object.fromEntries(
+    EVOLUCAO_DIARIA_CAMPANHA.map(d => [d.data, d])
+  );
+
+  const labels = EVOLUCAO_DIARIA_GERAL.map(d => d.data);
+
+  if (view === 'Dentro') {
+    return {
+      labels,
+      qtd: EVOLUCAO_DIARIA_GERAL.map(d => campaignMap[d.data]?.Dentro.qtd ?? 0),
+      tickets: EVOLUCAO_DIARIA_GERAL.map(d => campaignMap[d.data]?.Dentro.tickets ?? 0),
+      clientes: EVOLUCAO_DIARIA_GERAL.map(d => campaignMap[d.data]?.Dentro.clientes ?? 0)
+    };
+  }
+
+  if (view === 'Fora') {
+    return {
+      labels,
+      qtd: EVOLUCAO_DIARIA_GERAL.map(d => campaignMap[d.data]?.Fora.qtd ?? d.qtd),
+      tickets: EVOLUCAO_DIARIA_GERAL.map(d => campaignMap[d.data]?.Fora.tickets ?? d.cupons),
+      clientes: EVOLUCAO_DIARIA_GERAL.map(d => campaignMap[d.data]?.Fora.clientes ?? d.clientes)
+    };
+  }
+
   return {
-    labels: EVOLUCAO_DIARIA_CAMPANHA.map(d => d.data),
-    qtd: EVOLUCAO_DIARIA_CAMPANHA.map(d => d[view].qtd),
-    tickets: EVOLUCAO_DIARIA_CAMPANHA.map(d => d[view].tickets),
-    clientes: EVOLUCAO_DIARIA_CAMPANHA.map(d => d[view].clientes)
+    labels,
+    qtd: EVOLUCAO_DIARIA_GERAL.map(d => d.qtd),
+    tickets: EVOLUCAO_DIARIA_GERAL.map(d => d.cupons),
+    clientes: EVOLUCAO_DIARIA_GERAL.map(d => d.clientes)
   };
 }
 
