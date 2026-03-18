@@ -1,25 +1,34 @@
 // ============================================================
 //  DASHBOARD PÁSCOA — APP.JS
-//  Navigation, Charts (Chart.js — linha cores Páscoa), Tables
+//  Atualizado com base na planilha
 // ============================================================
 
-/* ── Defaults para Chart.js ── */
 Chart.defaults.font.family = "'Inter', sans-serif";
 Chart.defaults.color = '#888';
 
-// ─── Instâncias de gráficos (para poder destruir ao navegar) ─────
 let chartInstances = {};
-
-// ─── Estado ──────────────────────────────────────────────────────
 let rankMetric = 'itens';
+let campaignView = 'Dentro';
+let currentSection = 'visao-geral';
 
-// ─── Helpers ─────────────────────────────────────────────────────
 function fmt(n) {
   if (typeof n !== 'number') return n;
   return n.toLocaleString('pt-BR');
 }
-function fmtR(n, d = 2) { return n.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d }); }
-function fmtPct(n, d = 2) { return fmtR(n, d) + '%'; }
+
+function fmtR(n, d = 2) {
+  return n.toLocaleString('pt-BR', {
+    minimumFractionDigits: d,
+    maximumFractionDigits: d
+  });
+}
+
+function fmtPct(n, d = 1) {
+  return n.toLocaleString('pt-BR', {
+    minimumFractionDigits: d,
+    maximumFractionDigits: d
+  }) + '%';
+}
 
 function destroyChart(id) {
   if (chartInstances[id]) {
@@ -28,13 +37,15 @@ function destroyChart(id) {
   }
 }
 
-// ─── Counter Animation ───────────────────────────────────────────
 function animateCounters() {
   document.querySelectorAll('.kpi-value[data-count]').forEach(el => {
     const target = parseInt(el.dataset.count, 10);
+    if (Number.isNaN(target)) return;
+
     const duration = 900;
     const step = Math.ceil(target / (duration / 16));
     let current = 0;
+
     const timer = setInterval(() => {
       current = Math.min(current + step, target);
       el.textContent = fmt(current);
@@ -43,18 +54,33 @@ function animateCounters() {
   });
 }
 
-// ═══════════════════════════════════════════════════════════════
-//  NAVIGATION
-// ═══════════════════════════════════════════════════════════════
+function syncCampaignViewButtons() {
+  document.querySelectorAll('.campaign-view-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.view === campaignView);
+  });
+}
+
+function initViewButtons() {
+  document.querySelectorAll('.campaign-view-btn').forEach(btn => {
+    btn.onclick = () => {
+      campaignView = btn.dataset.view;
+      syncCampaignViewButtons();
+      renderSection(currentSection);
+    };
+  });
+}
+
 function initNav() {
   document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', e => {
       e.preventDefault();
+
       const sectionId = item.dataset.section;
-      // Update nav
+      currentSection = sectionId;
+
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
       item.classList.add('active');
-      // Show section
+
       document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
       const target = document.getElementById(sectionId);
       if (target) {
@@ -83,231 +109,340 @@ function renderSection(id) {
       renderCRM();
       break;
   }
+
   setTimeout(animateCounters, 100);
+  setTimeout(syncCampaignViewButtons, 0);
+  setTimeout(initViewButtons, 0);
+}
+
+function getCampaignSeries(view) {
+  return {
+    labels: EVOLUCAO_DIARIA_CAMPANHA.map(d => d.data),
+    qtd: EVOLUCAO_DIARIA_CAMPANHA.map(d => d[view].qtd),
+    tickets: EVOLUCAO_DIARIA_CAMPANHA.map(d => d[view].tickets),
+    clientes: EVOLUCAO_DIARIA_CAMPANHA.map(d => d[view].clientes)
+  };
 }
 
 // ═══════════════════════════════════════════════════════════════
 //  VISÃO GERAL
 // ═══════════════════════════════════════════════════════════════
 function renderVisaoGeral() {
-  // Gráfico evolução diária — LINHA — cores Páscoa
+  buildPodio();
+  buildChartEvolucaoGeral();
+  buildDonutCampanha();
+}
+
+function buildPodio() {
+  const grid = document.getElementById('podioGrid');
+  if (!grid) return;
+
+  const medals = ['🥇', '🥈', '🥉'];
+  const bars = ['podio-bar-1', 'podio-bar-2', 'podio-bar-3'];
+
+  grid.innerHTML = PODIO_TOP3.map((item, i) => `
+    <div class="podio-item podio-${i + 1}">
+      <div class="podio-img-wrap ${i === 0 ? 'podio-img-crown' : ''}">
+        ${i === 0 ? '<div class="crown-icon">👑</div>' : ''}
+        ${
+          item.img
+            ? `<img src="${item.img}" alt="${item.nome}" class="podio-product-img" onerror="this.style.display='none'" />`
+            : `<div class="product-img-placeholder">🍫</div>`
+        }
+      </div>
+      <div class="podio-medal">${medals[i]}</div>
+      <div class="podio-bar ${bars[i]}"></div>
+      <div class="podio-info">
+        <strong>${item.nome}</strong>
+        <span class="podio-qty">${fmt(item.itens)} itens</span>
+        <span class="podio-clients">${fmt(item.clientes)} clientes</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function buildChartEvolucaoGeral() {
   destroyChart('chartEvolucaoDiaria');
-  const ctxEvol = document.getElementById('chartEvolucaoDiaria');
-  if (ctxEvol) {
-    const labels = EVOLUCAO_DIARIA_CAMPANHA.map(d => d.data);
-    chartInstances['chartEvolucaoDiaria'] = new Chart(ctxEvol, {
-      type: 'line',
-      data: {
-        labels,
-        datasets: [
-          {
-            label: 'Clientes na Campanha',
-            data: EVOLUCAO_DIARIA_CAMPANHA.map(d => d.clientes),
-            borderColor: PALETA.lilac,
-            backgroundColor: PALETA.lilacBg,
-            borderWidth: 3,
-            pointRadius: 5,
-            pointHoverRadius: 7,
-            pointBackgroundColor: PALETA.lilac,
-            pointBorderColor: '#fff',
-            pointBorderWidth: 2,
-            cubicInterpolationMode: 'monotone',
-            tension: 0.42,
-            fill: true
-          },
-          {
-            label: 'Itens Vendidos (Campanha)',
-            data: EVOLUCAO_DIARIA_CAMPANHA.map(d => d.itens),
-            borderColor: PALETA.pink,
-            backgroundColor: PALETA.pinkBg,
-            borderWidth: 3,
-            pointRadius: 5,
-            pointHoverRadius: 7,
-            pointBackgroundColor: PALETA.pink,
-            pointBorderColor: '#fff',
-            pointBorderWidth: 2,
-            cubicInterpolationMode: 'monotone',
-            tension: 0.42,
-            fill: true
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        interaction: { mode: 'index', intersect: false },
-        plugins: {
-          legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8, padding: 14, font: { size: 11, weight: '600' } } },
-          tooltip: {
-            backgroundColor: 'rgba(61,26,0,0.9)',
-            titleColor: '#fff',
-            bodyColor: '#f5ead8',
-            padding: 10,
-            cornerRadius: 10
+  const ctx = document.getElementById('chartEvolucaoDiaria');
+  if (!ctx) return;
+
+  const series = getCampaignSeries(campaignView);
+
+  chartInstances.chartEvolucaoDiaria = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: series.labels,
+      datasets: [
+        {
+          label: `Clientes — ${campaignView}`,
+          data: series.clientes,
+          borderColor: PALETA.lilac,
+          backgroundColor: PALETA.lilacBg,
+          borderWidth: 3,
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          pointBackgroundColor: PALETA.lilac,
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          cubicInterpolationMode: 'monotone',
+          tension: 0.45,
+          fill: true
+        },
+        {
+          label: `Qtd Vendida — ${campaignView}`,
+          data: series.qtd,
+          borderColor: PALETA.pink,
+          backgroundColor: PALETA.pinkBg,
+          borderWidth: 3,
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          pointBackgroundColor: PALETA.pink,
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          cubicInterpolationMode: 'monotone',
+          tension: 0.45,
+          fill: true
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            usePointStyle: true,
+            boxWidth: 8,
+            padding: 14,
+            font: { size: 11, weight: '600' }
           }
         },
-        scales: {
-          x: { grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false }, ticks: { font: { size: 11, weight: '600' } } },
-          y: {
-            grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false },
-            beginAtZero: true,
-            grace: '8%',
-            ticks: { font: { size: 11 }, callback: v => fmt(v) }
-          }
+        tooltip: {
+          backgroundColor: 'rgba(61,26,0,0.9)',
+          titleColor: '#fff',
+          bodyColor: '#f5ead8',
+          padding: 10,
+          cornerRadius: 10
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false },
+          ticks: { font: { size: 11, weight: '600' } }
+        },
+        y: {
+          grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false },
+          beginAtZero: true,
+          grace: '8%',
+          ticks: { callback: value => fmt(value) }
         }
       }
-    });
-  }
+    }
+  });
+}
 
-  // Donut clientes Dentro vs Fora
+function buildDonutCampanha() {
   destroyChart('chartDonutClientes');
-  const ctxDonut = document.getElementById('chartDonutClientes');
-  if (ctxDonut) {
-    chartInstances['chartDonutClientes'] = new Chart(ctxDonut, {
-      type: 'doughnut',
-      data: {
-        labels: [`Dentro (${fmt(TOTAIS.clientesDentro)})`, `Fora (${fmt(TOTAIS.clientesFora)})`],
-        datasets: [{
-          data: [TOTAIS.clientesDentro, TOTAIS.clientesFora],
-          backgroundColor: [PALETA.lilac, '#f5ead8'],
-          borderColor: ['#fff', '#fff'],
-          borderWidth: 3,
-          hoverOffset: 8
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        cutout: '68%',
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            backgroundColor: 'rgba(61,26,0,0.9)',
-            callbacks: {
-              label: ctx => ` ${fmt(ctx.parsed)} clientes (${fmtPct(ctx.parsed / (TOTAIS.clientesDentro + TOTAIS.clientesFora) * 100, 1)})`
+  const ctx = document.getElementById('chartDonutClientes');
+  if (!ctx) return;
+
+  chartInstances.chartDonutClientes = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: [
+        `Dentro (${fmt(TOTAIS.clientesDentro)})`,
+        `Fora (${fmt(TOTAIS.clientesForaBase)})`
+      ],
+      datasets: [{
+        data: [TOTAIS.clientesDentro, TOTAIS.clientesForaBase],
+        backgroundColor: [PALETA.lilac, '#f5ead8'],
+        borderColor: ['#fff', '#fff'],
+        borderWidth: 3,
+        hoverOffset: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '68%',
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: 'rgba(61,26,0,0.9)',
+          callbacks: {
+            label: ctx => {
+              const total = TOTAIS.clientesDentro + TOTAIS.clientesForaBase;
+              const pct = (ctx.parsed / total) * 100;
+              return ` ${fmt(ctx.parsed)} clientes (${fmtPct(pct, 1)})`;
             }
           }
         }
       }
-    });
-  }
+    }
+  });
 }
 
 // ═══════════════════════════════════════════════════════════════
 //  VISÃO OPERACIONAL
 // ═══════════════════════════════════════════════════════════════
 function renderVisaoOperacional() {
-  // Gráfico de linha: clientes e itens por dia (campanha)
-  destroyChart('chartOpDiario');
-  const ctxOp = document.getElementById('chartOpDiario');
-  if (ctxOp) {
-    const labels = EVOLUCAO_DIARIA_CAMPANHA.map(d => d.data);
-    chartInstances['chartOpDiario'] = new Chart(ctxOp, {
-      type: 'line',
-      data: {
-        labels,
-        datasets: [
-          {
-            label: 'Clientes (Dentro)',
-            data: EVOLUCAO_DIARIA_CAMPANHA.map(d => d.clientes),
-            borderColor: PALETA.lilac,
-            backgroundColor: PALETA.lilacBg,
-            borderWidth: 3,
-            pointRadius: 7,
-            pointBackgroundColor: PALETA.lilac,
-            pointBorderColor: '#fff',
-            pointBorderWidth: 2,
-            tension: 0.3,
-            fill: true
-          },
-          {
-            label: 'Itens Vendidos (Campanha)',
-            data: EVOLUCAO_DIARIA_CAMPANHA.map(d => d.itens),
-            borderColor: PALETA.orange,
-            backgroundColor: PALETA.orangeBg,
-            borderWidth: 3,
-            pointRadius: 7,
-            pointBackgroundColor: PALETA.orange,
-            pointBorderColor: '#fff',
-            pointBorderWidth: 2,
-            tension: 0.3,
-            fill: true
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        interaction: { mode: 'index', intersect: false },
-        plugins: {
-          legend: { position: 'top', labels: { usePointStyle: true, padding: 14, font: { size: 12 } } },
-          tooltip: {
-            backgroundColor: 'rgba(61,26,0,0.9)',
-            titleColor: '#fff',
-            bodyColor: '#f5ead8',
-            padding: 10,
-            cornerRadius: 10,
-            callbacks: { label: ctx => ` ${fmt(ctx.parsed.y)}` }
-          }
-        },
-        scales: {
-          x: { grid: { color: 'rgba(0,0,0,0.04)' } },
-          y: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: v => fmt(v) } }
-        }
-      }
-    });
-  }
-
-  // Donut participação
-  destroyChart('chartOpParticipacao');
-  const ctxPart = document.getElementById('chartOpParticipacao');
-  if (ctxPart) {
-    chartInstances['chartOpParticipacao'] = new Chart(ctxPart, {
-      type: 'doughnut',
-      data: {
-        labels: ['Atingidos', 'Gap'],
-        datasets: [{
-          data: [(TOTAIS.clientesDentro / TOTAIS.clientesTotal) * 100, 100 - ((TOTAIS.clientesDentro / TOTAIS.clientesTotal) * 100)],
-          backgroundColor: [PALETA.lilac, '#f5ead8'],
-          borderColor: ['#fff', '#fff'],
-          borderWidth: 3,
-          hoverOffset: 8
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        cutout: '68%',
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            backgroundColor: 'rgba(61,26,0,0.9)',
-            callbacks: { label: ctx => ` ${fmtPct(ctx.parsed, 1)}` }
-          }
-        }
-      }
-    });
-  }
-
-  // Tabelas de lojas por dia
-  renderLojaTable('tbodyDia12', LOJAS_DIA12);
-  renderLojaTable('tbodyDia13', LOJAS_DIA13);
-  renderLojaTable('tbodyDia14', LOJAS_DIA14);
+  buildChartOperacional();
+  buildDonutParticipacao();
+  buildDailyCampaignTable();
+  buildStoresTable();
 }
 
-function renderLojaTable(tbodyId, data) {
-  const tbody = document.getElementById(tbodyId);
+function buildChartOperacional() {
+  destroyChart('chartOpDiario');
+  const ctx = document.getElementById('chartOpDiario');
+  if (!ctx) return;
+
+  const series = getCampaignSeries(campaignView);
+
+  chartInstances.chartOpDiario = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: series.labels,
+      datasets: [
+        {
+          label: `Clientes — ${campaignView}`,
+          data: series.clientes,
+          borderColor: PALETA.lilac,
+          backgroundColor: PALETA.lilacBg,
+          borderWidth: 3,
+          pointRadius: 6,
+          pointBackgroundColor: PALETA.lilac,
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          cubicInterpolationMode: 'monotone',
+          tension: 0.45,
+          fill: true
+        },
+        {
+          label: `Qtd — ${campaignView}`,
+          data: series.qtd,
+          borderColor: PALETA.orange,
+          backgroundColor: PALETA.orangeBg,
+          borderWidth: 3,
+          pointRadius: 6,
+          pointBackgroundColor: PALETA.orange,
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          cubicInterpolationMode: 'monotone',
+          tension: 0.45,
+          fill: true
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            usePointStyle: true,
+            padding: 14,
+            font: { size: 12 }
+          }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(61,26,0,0.9)',
+          titleColor: '#fff',
+          bodyColor: '#f5ead8',
+          padding: 10,
+          cornerRadius: 10
+        }
+      },
+      scales: {
+        x: { grid: { color: 'rgba(0,0,0,0.04)' } },
+        y: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: value => fmt(value) } }
+      }
+    }
+  });
+}
+
+function buildDonutParticipacao() {
+  destroyChart('chartOpParticipacao');
+  const ctx = document.getElementById('chartOpParticipacao');
+  const legend = document.getElementById('operacionalLegend');
+  if (!ctx || !legend) return;
+
+  const value = campaignView === 'Dentro'
+    ? TOTAIS.clientesDentro
+    : TOTAIS.clientesForaBase;
+
+  const remainder = TOTAIS.clientesTotalBase - value;
+  const pct = (value / TOTAIS.clientesTotalBase) * 100;
+
+  chartInstances.chartOpParticipacao = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: [campaignView, 'Restante da base'],
+      datasets: [{
+        data: [value, remainder],
+        backgroundColor: [PALETA.lilac, '#f5ead8'],
+        borderColor: ['#fff', '#fff'],
+        borderWidth: 3,
+        hoverOffset: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '68%',
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: 'rgba(61,26,0,0.9)',
+          callbacks: {
+            label: ctx => ` ${fmt(ctx.parsed)} clientes`
+          }
+        }
+      }
+    }
+  });
+
+  legend.innerHTML = `
+    <span class="dot dot-purple"></span><span>${campaignView} <strong>${fmtPct(pct, 1)}</strong></span>
+    <span class="dot dot-cream"></span><span>Restante <strong>${fmtPct(100 - pct, 1)}</strong></span>
+  `;
+}
+
+function buildDailyCampaignTable() {
+  const tbody = document.getElementById('dailyCampaignTableBody');
   if (!tbody) return;
-  if (!data || data.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#bbb;padding:1rem;">Dados não disponíveis para este dia.</td></tr>';
-    return;
-  }
-  tbody.innerHTML = data.map((row, i) => `
+
+  tbody.innerHTML = EVOLUCAO_DIARIA_CAMPANHA.map(d => `
     <tr>
+      <td><strong>${d.data}</strong></td>
+      <td>${fmt(d.Dentro.qtd)}</td>
+      <td>${fmt(d.Dentro.tickets)}</td>
+      <td>${fmt(d.Dentro.clientes)}</td>
+      <td>${fmt(d.Fora.qtd)}</td>
+      <td>${fmt(d.Fora.tickets)}</td>
+      <td>${fmt(d.Fora.clientes)}</td>
+      <td><strong>${fmt(d.Total.qtd)}</strong></td>
+      <td><strong>${fmt(d.Total.tickets)}</strong></td>
+      <td><strong>${fmt(d.Total.clientes)}</strong></td>
+    </tr>
+  `).join('');
+}
+
+function buildStoresTable() {
+  const tbody = document.getElementById('storesTableBody');
+  if (!tbody) return;
+
+  tbody.innerHTML = RANKING_LOJAS_DENTRO.map((row, i) => `
+    <tr>
+      <td class="rank-num">${i + 1}</td>
       <td><strong>${row.loja}</strong></td>
+      <td>${fmt(row.qtd)}</td>
+      <td>${fmt(row.tickets)}</td>
       <td>${fmt(row.clientes)}</td>
-      <td>${fmt(row.cupons)}</td>
-      <td>${fmt(row.itens)}</td>
     </tr>
   `).join('');
 }
@@ -318,17 +453,15 @@ function renderLojaTable(tbodyId, data) {
 function renderRanking() {
   buildRankingChart(rankMetric);
   buildRankingTable(rankMetric);
-  buildBestDayGrid();
 
-  // Toggle buttons
   document.querySelectorAll('.toggle-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.onclick = () => {
       document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       rankMetric = btn.dataset.metric;
       buildRankingChart(rankMetric);
       buildRankingTable(rankMetric);
-    });
+    };
   });
 }
 
@@ -340,15 +473,16 @@ function buildRankingChart(metric) {
   const sorted = [...RANKING_DENTRO].sort((a, b) => b[metric] - a[metric]);
   const labels = sorted.map(d => d.shortName);
   const values = sorted.map(d => d[metric]);
-  const maxVal = Math.max(...values);
 
   const colors = [
     PALETA.lilac, PALETA.pink, PALETA.orange, PALETA.caramel,
     PALETA.mint, PALETA.choco,
-    'rgba(232,160,32,0.6)', 'rgba(211,84,0,0.6)', 'rgba(230,126,34,0.6)'
+    'rgba(232,160,32,0.6)', 'rgba(211,84,0,0.6)', 'rgba(230,126,34,0.6)',
+    'rgba(39,174,96,0.5)', 'rgba(123,63,26,0.5)', 'rgba(232,160,32,0.4)',
+    'rgba(211,84,0,0.4)'
   ];
 
-  chartInstances['chartRankingBar'] = new Chart(ctx, {
+  chartInstances.chartRankingBar = new Chart(ctx, {
     type: 'bar',
     data: {
       labels,
@@ -374,7 +508,7 @@ function buildRankingChart(metric) {
       scales: {
         x: {
           grid: { color: 'rgba(0,0,0,0.04)' },
-          ticks: { callback: v => fmt(v) }
+          ticks: { callback: value => fmt(value) }
         },
         y: {
           grid: { display: false },
@@ -388,12 +522,14 @@ function buildRankingChart(metric) {
 function buildRankingTable(metric) {
   const tbody = document.getElementById('rankTableBody');
   if (!tbody) return;
+
   const sorted = [...RANKING_DENTRO].sort((a, b) => b[metric] - a[metric]);
   const totalItens = RANKING_DENTRO.reduce((s, d) => s + d.itens, 0);
-
   const medals = ['🥇', '🥈', '🥉'];
+
   tbody.innerHTML = sorted.map((row, i) => {
-    const pct = totalItens > 0 ? (row.itens / totalItens * 100) : 0;
+    const pct = totalItens > 0 ? (row.itens / totalItens) * 100 : 0;
+
     return `
       <tr>
         <td class="rank-num">${medals[i] || (i + 1)}</td>
@@ -414,21 +550,6 @@ function buildRankingTable(metric) {
   }).join('');
 }
 
-function buildBestDayGrid() {
-  const grid = document.getElementById('bestDayGrid');
-  if (!grid) return;
-  const medals = ['🥇', '🥈'];
-  grid.innerHTML = BEST_PRODUCT_BY_DAY.map((d, i) => `
-    <div class="best-day-card">
-      <span class="bd-date">${d.data}</span>
-      <span class="bd-medal">${medals[i] || '⭐'}</span>
-      ${d.img ? `<img src="${d.img}" class="bd-img" alt="${d.produto}" onerror="this.style.display='none'" />` : ''}
-      <span class="bd-name">${d.produto}</span>
-      <span class="bd-qty">${fmt(d.itens)} itens</span>
-    </div>
-  `).join('');
-}
-
 // ═══════════════════════════════════════════════════════════════
 //  PRODUTOS CAMPANHA
 // ═══════════════════════════════════════════════════════════════
@@ -438,38 +559,45 @@ function renderProdutosCampanha() {
 
   const searchInput = document.getElementById('productSearch');
   if (searchInput) {
-    searchInput.addEventListener('input', () => {
-      const q = searchInput.value.toLowerCase();
+    searchInput.oninput = () => {
+      const q = searchInput.value.toLowerCase().trim();
       const filtered = PRODUTOS_CAMPANHA.filter(p =>
         p.name.toLowerCase().includes(q) ||
+        p.shortName.toLowerCase().includes(q) ||
         String(p.id).includes(q)
       );
+
       buildProductsGrid(filtered);
       buildProdTable(filtered);
-    });
+    };
   }
 }
 
 function buildProductsGrid(data) {
   const grid = document.getElementById('productsGrid');
   if (!grid) return;
+
   grid.innerHTML = data.map(p => `
     <div class="product-card">
       <div class="product-img-wrap">
-        ${p.img
-          ? `<img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=&quot;product-img-placeholder&quot;>🍫</div>'" />`
-          : `<div class="product-img-placeholder">🍫</div>`
+        ${
+          p.img
+            ? `<img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=&quot;product-img-placeholder&quot;>🍫</div>'" />`
+            : `<div class="product-img-placeholder">🍫</div>`
         }
       </div>
+
       <span class="pc-id">ID: ${p.id}</span>
       <span class="pc-name">${p.name}</span>
+
       <div class="pc-prices">
         <span class="pc-original">R$ ${fmtR(p.priceOriginal)}</span>
         <span class="pc-offer">R$ ${fmtR(p.priceOffer)}</span>
         <span class="pc-discount">-${p.discount}%</span>
       </div>
+
       <span class="pc-status ${p.soldDentro ? 'active' : 'inactive'}">
-        ${p.soldDentro ? '✓ Com vendas' : 'Sem vendas ainda'}
+        ${p.soldDentro ? `✓ ${fmt(p.itens)} itens na campanha` : 'Sem venda dentro'}
       </span>
     </div>
   `).join('');
@@ -478,7 +606,8 @@ function buildProductsGrid(data) {
 function buildProdTable(data) {
   const tbody = document.getElementById('prodTableBody');
   if (!tbody) return;
-  tbody.innerHTML = data.map((p, i) => `
+
+  tbody.innerHTML = data.map(p => `
     <tr>
       <td><code style="font-size:0.78rem;color:var(--choco-light)">${p.id}</code></td>
       <td><strong>${p.name}</strong></td>
@@ -491,7 +620,7 @@ function buildProdTable(data) {
       </td>
       <td>
         <span class="${p.soldDentro ? 'badge-within' : 'badge-outside'}">
-          ${p.soldDentro ? '✓ Vendas registradas' : 'Sem vendas (campanha)'}
+          ${p.soldDentro ? `✓ ${fmt(p.itens)} itens` : 'Sem venda dentro'}
         </span>
       </td>
     </tr>
@@ -502,153 +631,156 @@ function buildProdTable(data) {
 //  OPERACIONAL CRM
 // ═══════════════════════════════════════════════════════════════
 function renderCRM() {
-  // Gráfico linha: clientes por dia (geral, todos)
-  destroyChart('chartCRMDiario');
-  const ctxCRM = document.getElementById('chartCRMDiario');
-  if (ctxCRM) {
-    const labels = EVOLUCAO_DIARIA_GERAL.map(d => d.data);
-    chartInstances['chartCRMDiario'] = new Chart(ctxCRM, {
-      type: 'line',
-      data: {
-        labels,
-        datasets: [
-          {
-            label: 'Clientes Únicos/Dia',
-            data: EVOLUCAO_DIARIA_GERAL.map(d => d.clientes),
-            borderColor: PALETA.lilac,
-            backgroundColor: PALETA.lilacBg,
-            borderWidth: 3,
-            pointRadius: 5,
-            pointBackgroundColor: PALETA.lilac,
-            pointBorderColor: '#fff',
-            pointBorderWidth: 2,
-            tension: 0.35,
-            fill: true
-          },
-          {
-            label: 'Cupons/Dia',
-            data: EVOLUCAO_DIARIA_GERAL.map(d => d.cupons),
-            borderColor: PALETA.caramel,
-            backgroundColor: PALETA.caramelBg,
-            borderWidth: 2,
-            pointRadius: 4,
-            pointBackgroundColor: PALETA.caramel,
-            pointBorderColor: '#fff',
-            pointBorderWidth: 2,
-            tension: 0.35,
-            fill: false,
-            borderDash: [5, 4]
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        interaction: { mode: 'index', intersect: false },
-        plugins: {
-          legend: { position: 'top', labels: { usePointStyle: true, padding: 14, font: { size: 12 } } },
-          tooltip: {
-            backgroundColor: 'rgba(61,26,0,0.9)',
-            titleColor: '#fff',
-            bodyColor: '#f5ead8',
-            padding: 10,
-            cornerRadius: 10,
-            callbacks: {
-              label: ctx => ` ${fmt(ctx.parsed.y)}`,
-              afterBody: (items) => {
-                const date = items[0]?.label;
-                if (date === '12/03' || date === '13/03' || date === '14/03') {
-                  return ['📌 Campanha ativa'];
-                }
-                return [];
-              }
-            }
-          },
-          annotation: {}
-        },
-        scales: {
-          x: { grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false }, ticks: { font: { size: 11, weight: '600' } } },
-          y: {
-            grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false },
-            beginAtZero: true,
-            grace: '8%',
-            ticks: { font: { size: 11 }, callback: v => fmt(v) }
-          }
-        }
-      }
-    });
-  }
-
-  // Funil
-  destroyChart('chartCRMFunil');
-  const ctxFunil = document.getElementById('chartCRMFunil');
-  if (ctxFunil) {
-    chartInstances['chartCRMFunil'] = new Chart(ctxFunil, {
-      type: 'bar',
-      data: {
-        labels: ['Base Total', 'Compraram', 'Na Campanha'],
-        datasets: [{
-          label: 'Clientes',
-          data: [TOTAIS.clientesTotal, TOTAIS.clientesFora + TOTAIS.clientesDentro, TOTAIS.clientesDentro],
-          backgroundColor: [PALETA.lilacBg, PALETA.caramelBg, PALETA.lilac],
-          borderColor: [PALETA.lilac, PALETA.caramel, PALETA.lilac],
-          borderWidth: 2,
-          borderRadius: 8,
-          borderSkipped: false
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            backgroundColor: 'rgba(61,26,0,0.9)',
-            callbacks: { label: ctx => ` ${fmt(ctx.parsed.y)} clientes` }
-          }
-        },
-        scales: {
-          x: { grid: { display: false } },
-          y: {
-            grid: { color: 'rgba(0,0,0,0.04)' },
-            ticks: { callback: v => (v >= 1000 ? (v / 1000).toFixed(0) + 'k' : v) }
-          }
-        }
-      }
-    });
-  }
-
-  // Tabela de clientes por dia
+  buildCRMLine();
+  buildCRMFunnel();
   buildCRMDayTable();
-
-  // Insights
   buildCRMInsights();
+}
+
+function buildCRMLine() {
+  destroyChart('chartCRMDiario');
+  const ctx = document.getElementById('chartCRMDiario');
+  if (!ctx) return;
+
+  chartInstances.chartCRMDiario = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: EVOLUCAO_DIARIA_GERAL.map(d => d.data),
+      datasets: [
+        {
+          label: 'Clientes Totais',
+          data: EVOLUCAO_DIARIA_GERAL.map(d => d.clientes),
+          borderColor: PALETA.lilac,
+          backgroundColor: PALETA.lilacBg,
+          borderWidth: 3,
+          pointRadius: 4,
+          pointBackgroundColor: PALETA.lilac,
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          cubicInterpolationMode: 'monotone',
+          tension: 0.45,
+          fill: true
+        },
+        {
+          label: 'Cupons Totais',
+          data: EVOLUCAO_DIARIA_GERAL.map(d => d.cupons),
+          borderColor: PALETA.caramel,
+          backgroundColor: PALETA.caramelBg,
+          borderWidth: 2,
+          pointRadius: 3,
+          pointBackgroundColor: PALETA.caramel,
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          cubicInterpolationMode: 'monotone',
+          tension: 0.45,
+          fill: false,
+          borderDash: [6, 4]
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            usePointStyle: true,
+            padding: 14,
+            font: { size: 12 }
+          }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(61,26,0,0.9)',
+          titleColor: '#fff',
+          bodyColor: '#f5ead8',
+          padding: 10,
+          cornerRadius: 10
+        }
+      },
+      scales: {
+        x: { grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false } },
+        y: {
+          grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false },
+          ticks: { callback: value => fmt(value) }
+        }
+      }
+    }
+  });
+}
+
+function buildCRMFunnel() {
+  destroyChart('chartCRMFunil');
+  const ctx = document.getElementById('chartCRMFunil');
+  if (!ctx) return;
+
+  chartInstances.chartCRMFunil = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Base Total', 'Fora', 'Dentro'],
+      datasets: [{
+        label: 'Clientes',
+        data: [
+          TOTAIS.clientesTotalBase,
+          TOTAIS.clientesForaBase,
+          TOTAIS.clientesDentro
+        ],
+        backgroundColor: [PALETA.caramelBg, '#f5ead8', PALETA.lilac],
+        borderColor: [PALETA.caramel, '#d9cdbd', PALETA.lilac],
+        borderWidth: 2,
+        borderRadius: 8,
+        borderSkipped: false
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: 'rgba(61,26,0,0.9)',
+          callbacks: { label: ctx => ` ${fmt(ctx.parsed.y)} clientes` }
+        }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: {
+          grid: { color: 'rgba(0,0,0,0.04)' },
+          ticks: {
+            callback: value => value >= 1000 ? `${Math.round(value / 1000)}k` : value
+          }
+        }
+      }
+    }
+  });
 }
 
 function buildCRMDayTable() {
   const tbody = document.getElementById('crmDayTableBody');
   if (!tbody) return;
 
-  const dentroPorDia = { '12/03': 0, '13/03': 1189, '14/03': 1859 };
+  const dailyMap = Object.fromEntries(
+    EVOLUCAO_DIARIA_CAMPANHA.map(d => [d.data, d])
+  );
 
   tbody.innerHTML = EVOLUCAO_DIARIA_GERAL.map(d => {
-    const dentro = dentroPorDia[d.data] || 0;
-    const pct = d.clientes > 0 ? (dentro / d.clientes * 100) : 0;
-    const isActive = dentro > 0;
+    const campanha = dailyMap[d.data];
+    const dentro = campanha ? campanha.Dentro.clientes : 0;
+    const fora = campanha ? campanha.Fora.clientes : d.clientes;
+    const pct = d.clientes > 0 ? (dentro / d.clientes) * 100 : 0;
+
     return `
-      <tr style="${isActive ? 'background:#fdf6ec;' : ''}">
-        <td style="font-weight:${isActive ? '700' : '400'}">
-          ${d.data}${isActive ? ' 📌' : ''}
-        </td>
+      <tr>
+        <td><strong>${d.data}</strong></td>
         <td>${fmt(d.clientes)}</td>
-        <td style="color:${isActive ? 'var(--lilac)' : '#ccc'};font-weight:${isActive ? '700' : '400'}">
-          ${fmt(dentro)}
-        </td>
-        <td>${fmt(d.clientes + dentro)}</td>
+        <td style="color:var(--caramel);font-weight:700">${fmt(dentro)}</td>
+        <td>${fmt(fora)}</td>
         <td>
-          ${isActive
-            ? `<span style="background:var(--lilac);color:#fff;padding:2px 8px;border-radius:10px;font-size:0.76rem;font-weight:700">${fmtPct(pct, 1)}</span>`
-            : '<span style="color:#ccc;font-size:0.76rem">—</span>'
+          ${
+            dentro > 0
+              ? `<span style="background:var(--lilac);color:#fff;padding:2px 8px;border-radius:10px;font-size:0.76rem;font-weight:700">${fmtPct(pct, 1)}</span>`
+              : '<span style="color:#ccc;font-size:0.76rem">0,0%</span>'
           }
         </td>
       </tr>
@@ -660,42 +792,49 @@ function buildCRMInsights() {
   const container = document.getElementById('crmInsights');
   if (!container) return;
 
+  const growth =
+    ((EVOLUCAO_DIARIA_CAMPANHA[1].Dentro.clientes - EVOLUCAO_DIARIA_CAMPANHA[0].Dentro.clientes) /
+      EVOLUCAO_DIARIA_CAMPANHA[0].Dentro.clientes) * 100;
+
+  const topStore = RANKING_LOJAS_DENTRO[0];
+  const topProduct = RANKING_DENTRO[0];
+
   const insights = [
     {
       icon: 'fas fa-arrow-trend-up',
       type: 'good',
-      title: 'Crescimento acelerado',
-      text: 'De 1.189 clientes (dia 13) para 1.859 clientes (dia 14), um crescimento de +56% em 24h na campanha.'
+      title: 'Crescimento forte entre 13/03 e 14/03',
+      text: `Clientes Dentro cresceram ${fmtPct(growth, 1)} no comparativo diário.`
+    },
+    {
+      icon: 'fas fa-percent',
+      type: 'info',
+      title: 'Participação atual da campanha',
+      text: `A campanha representa ${fmtPct(TOTAIS.participacao, 2)} da base estimada de clientes.`
+    },
+    {
+      icon: 'fas fa-store',
+      type: 'good',
+      title: 'Loja líder na campanha',
+      text: `${topStore.loja} lidera com ${fmt(topStore.qtd)} itens, ${fmt(topStore.tickets)} tickets e ${fmt(topStore.clientes)} clientes.`
+    },
+    {
+      icon: 'fas fa-egg',
+      type: 'warn',
+      title: 'Produto com maior tração',
+      text: `${topProduct.nome} lidera com ${fmt(topProduct.itens)} itens e ${fmt(topProduct.clientes)} clientes.`
+    },
+    {
+      icon: 'fas fa-box-open',
+      type: 'info',
+      title: 'Cobertura de itens da campanha',
+      text: `${fmt(TOTAIS.produtosDentro)} dos ${fmt(TOTAIS.produtosCampanha)} produtos já tiveram venda com status Dentro.`
     },
     {
       icon: 'fas fa-users-slash',
       type: 'alert',
-      title: 'Grande gap de cobertura',
-      text: 'A campanha atingiu 10,00% da base. Ainda há potencial de 27.432 clientes fora da campanha.'
-    },
-    {
-      icon: 'fas fa-store',
-      type: 'info',
-      title: '51 lojas com vendas na campanha',
-      text: 'A loja Maringá Av Kakogawa lidera em quantidade vendida, seguida por São José Rua Joinville e Pinheirinho.'
-    },
-    {
-      icon: 'fas fa-link',
-      type: 'warn',
-      title: 'Overlap: 0 clientes',
-      text: 'Não houve sobreposição identificada entre clientes Dentro e Fora nesta extração de dados.'
-    },
-    {
-      icon: 'fas fa-egg',
-      type: 'good',
-      title: '13 de 19 produtos com vendas',
-      text: 'Dos 19 produtos mapeados na campanha, 13 já registraram vendas. Restam 6 produtos sem adesão.'
-    },
-    {
-      icon: 'fas fa-calendar-check',
-      type: 'info',
-      title: 'Campanha iniciada em 12/03',
-      text: 'Dados de venda na campanha disponíveis para 13 e 14/03. Tendência positiva de crescimento diário.'
+      title: 'Clientes fora da campanha',
+      text: `Ainda existem ${fmt(TOTAIS.clientesForaBase)} clientes fora, o que mostra espaço para ampliar adesão.`
     }
   ];
 
@@ -715,7 +854,7 @@ function buildCRMInsights() {
 // ═══════════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
-  // Render initial section
+  initViewButtons();
   renderVisaoGeral();
   animateCounters();
 });
