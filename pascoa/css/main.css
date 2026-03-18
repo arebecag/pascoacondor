@@ -501,9 +501,9 @@ body {
   align-items: flex-end;
   justify-content: center;
   gap: 1rem;
+  flex-wrap: nowrap;
 }
 
-/* base dos cards */
 .podio-item {
   display: flex;
   flex-direction: column;
@@ -519,34 +519,97 @@ body {
   width: 220px;
 }
 
-/* 🥇 1º lugar (MEIO + MAIS ALTO) */
+/* 🥈 2º lugar - esquerda */
 .podio-item:nth-child(2) {
+  order: 1;
+  min-height: 260px;
+}
+
+/* 🥇 1º lugar - meio e mais alto */
+.podio-item:nth-child(1) {
   order: 2;
   min-height: 300px;
   transform: translateY(-18px);
   z-index: 2;
 }
 
-/* 🥈 2º lugar (ESQUERDA) */
-.podio-item:nth-child(1) {
-  order: 1;
-  min-height: 260px;
-}
-
-/* 🥉 3º lugar (DIREITA) */
+/* 🥉 3º lugar - direita */
 .podio-item:nth-child(3) {
   order: 3;
   min-height: 240px;
 }
 
-/* hover bonito */
 .podio-item:hover {
   transform: translateY(-6px);
 }
 
-.podio-item:nth-child(2):hover {
+.podio-item:nth-child(1):hover {
   transform: translateY(-22px);
 }
+
+.podio-img-wrap {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--cream-dark);
+  background: #fff;
+}
+
+.podio-img-crown {
+  border-color: var(--yellow-egg);
+  box-shadow: 0 0 0 3px var(--caramel);
+}
+
+.crown-icon {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.3rem;
+  z-index: 2;
+}
+
+.podio-product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 6px;
+}
+
+.podio-medal {
+  font-size: 1.3rem;
+}
+
+.podio-bar {
+  width: 100%;
+  border-radius: 6px 6px 0 0;
+}
+
+.podio-bar-1 { height: 42px; background: linear-gradient(to top, var(--caramel), var(--yellow-egg)); }
+.podio-bar-2 { height: 30px; background: linear-gradient(to top, #adb5bd, #dee2e6); }
+.podio-bar-3 { height: 22px; background: linear-gradient(to top, var(--choco-light), var(--caramel)); }
+
+.podio-info strong {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--choco-dark);
+  display: block;
+}
+
+.podio-qty {
+  font-size: 0.94rem;
+  font-weight: 800;
+  color: var(--caramel);
+  display: block;
+}
+
+.podio-clients {
+  font-size: 0.66rem;
+  color: #8f7e6c;
+}
+
 .podio-img-wrap {
   position: relative;
   width: 70px;
