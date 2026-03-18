@@ -22,7 +22,6 @@
 
   <div class="app-wrapper">
 
-    <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-bg-art">
         <img src="assets/img/bg-cenario.png" alt="" class="sidebar-bg-img" />
@@ -47,7 +46,7 @@
 
         <div class="sidebar-meta">
           <span class="meta-dot"></span>
-          <span>Atualização: 14/03/2026</span>
+          <span>Atualização: 17/03/2026</span>
         </div>
 
         <nav class="sidebar-nav">
@@ -81,13 +80,11 @@
       </div>
     </aside>
 
-    <!-- MAIN CONTENT -->
     <main class="main-content" id="mainContent">
 
       <!-- ===================== VISÃO GERAL ===================== -->
       <section class="page-section active" id="visao-geral">
 
-        <!-- COELHO TOPO -->
         <div class="rabbit-top-wrap" aria-hidden="true">
           <img
             src="assets/img/rubbitWaving.gif"
@@ -96,14 +93,13 @@
           />
         </div>
 
-        <!-- KPI CARDS ROW -->
         <div class="kpi-row">
           <div class="kpi-card kpi-purple">
             <div class="kpi-icon"><i class="fas fa-users"></i></div>
             <div class="kpi-info">
-              <span class="kpi-label">Clientes Atingidos</span>
-              <span class="kpi-value" data-count="3048">0</span>
-              <span class="kpi-sub">na campanha (Dentro)</span>
+              <span class="kpi-label">Clientes na Campanha</span>
+              <span class="kpi-value" data-count="4162">0</span>
+              <span class="kpi-sub">status Dentro</span>
             </div>
           </div>
 
@@ -111,39 +107,44 @@
             <div class="kpi-icon"><i class="fas fa-receipt"></i></div>
             <div class="kpi-info">
               <span class="kpi-label">Cupons na Campanha</span>
-              <span class="kpi-value" data-count="3286">0</span>
-              <span class="kpi-sub">cupons únicos</span>
+              <span class="kpi-value" data-count="4489">0</span>
+              <span class="kpi-sub">tickets da campanha</span>
             </div>
           </div>
 
           <div class="kpi-card kpi-orange">
             <div class="kpi-icon"><i class="fas fa-box"></i></div>
             <div class="kpi-info">
-              <span class="kpi-label">Itens Vendidos</span>
-              <span class="kpi-value" data-count="4940">0</span>
-              <span class="kpi-sub">unidades na campanha</span>
+              <span class="kpi-label">Qtd Vendida</span>
+              <span class="kpi-value" data-count="6616">0</span>
+              <span class="kpi-sub">itens da campanha</span>
             </div>
           </div>
 
           <div class="kpi-card kpi-pink">
             <div class="kpi-icon"><i class="fas fa-store"></i></div>
             <div class="kpi-info">
-              <span class="kpi-label">Lojas com Vendas</span>
-              <span class="kpi-value" data-count="51">0</span>
-              <span class="kpi-sub">filiais ativas</span>
+              <span class="kpi-label">Lojas Participantes</span>
+              <span class="kpi-value" data-count="67">0</span>
+              <span class="kpi-sub">filiais com vendas</span>
             </div>
           </div>
         </div>
 
-        <!-- GRÁFICOS -->
         <div class="charts-row-geral">
           <div class="chart-card chart-card-wide">
-            <div class="chart-header">
-              <h3><i class="fas fa-chart-line"></i> Evolução Diária — Campanha</h3>
-              <p class="chart-sub">
-                Clientes únicos e qtd. de produtos vendidos na campanha por dia (a partir de 13/03)
-              </p>
+            <div class="chart-header chart-header-with-actions">
+              <div>
+                <h3><i class="fas fa-chart-line"></i> Evolução Diária — Campanha</h3>
+                <p class="chart-sub">Curva diária com filtro Dentro / Fora</p>
+              </div>
+
+              <div class="campaign-view-toggle">
+                <button class="campaign-view-btn active" data-view="Dentro">Dentro</button>
+                <button class="campaign-view-btn" data-view="Fora">Fora</button>
+              </div>
             </div>
+
             <div class="chart-body" style="height:260px">
               <canvas id="chartEvolucaoDiaria"></canvas>
             </div>
@@ -151,83 +152,27 @@
 
           <div class="chart-card chart-card-narrow">
             <div class="chart-header">
-              <h3><i class="fas fa-circle-half-stroke"></i> Clientes na Campanha</h3>
-              <p class="chart-sub">Dentro vs. Fora da campanha</p>
+              <h3><i class="fas fa-circle-half-stroke"></i> Base da Campanha</h3>
+              <p class="chart-sub">Dentro vs Fora</p>
             </div>
             <div class="chart-body chart-center-body" style="height:200px">
               <canvas id="chartDonutClientes"></canvas>
             </div>
             <div class="donut-legend">
-              <span class="dot dot-purple"></span><span>Dentro <strong>3.048</strong></span>
-              <span class="dot dot-cream"></span><span>Fora <strong>27.432</strong></span>
+              <span class="dot dot-purple"></span><span>Dentro <strong>4.162</strong></span>
+              <span class="dot dot-cream"></span><span>Fora <strong>33.509</strong></span>
             </div>
           </div>
         </div>
 
-        <!-- PÓDIO -->
         <div class="podio-section">
           <div class="section-title-bar">
             <img src="assets/img/badge-maior-pascoa.png" alt="" class="title-badge" />
-            <h2>🏆 Pódio — Top 3 Produtos na Campanha</h2>
-            <span class="rank-by-tag">por quantidade vendida</span>
+            <h2>🏆 Pódio — Top 3 Produtos</h2>
+            <span class="rank-by-tag">baseado na planilha</span>
           </div>
 
-          <div class="podio-grid">
-            <div class="podio-item podio-2">
-              <div class="podio-img-wrap">
-                <img
-                  src="assets/img/laka-branco.svg"
-                  alt="Laka 80g"
-                  class="podio-product-img"
-                  onerror="this.src='assets/img/lockup-pascoa.png'"
-                />
-              </div>
-              <div class="podio-medal">🥈</div>
-              <div class="podio-bar podio-bar-2"></div>
-              <div class="podio-info">
-                <strong>Choc. Laka 80g</strong>
-                <span class="podio-qty">1.688 itens</span>
-                <span class="podio-clients">1.100 clientes</span>
-              </div>
-            </div>
-
-            <div class="podio-item podio-1">
-              <div class="podio-img-wrap podio-img-crown">
-                <div class="crown-icon">👑</div>
-                <img
-                  src="https://sspark.genspark.ai/cfimages?u1=WzACG%2F4YtAYZ1OI7hY2sQPHxsoKeFhsXLFMG9v7Okg2D%2B%2F4oUYyCSejbclETE%2BD4By8%2FMTipDifbx58QfIQGS3dNyA%3D%3D&u2=%2BCgrL01zCpbYbTqA&width=2560"
-                  alt="Ao Leite 80g"
-                  class="podio-product-img"
-                  onerror="this.src='assets/img/lockup-pascoa.png'"
-                />
-              </div>
-              <div class="podio-medal">🥇</div>
-              <div class="podio-bar podio-bar-1"></div>
-              <div class="podio-info">
-                <strong>Choc. Ao Leite 80g</strong>
-                <span class="podio-qty">1.873 itens</span>
-                <span class="podio-clients">951 clientes</span>
-              </div>
-            </div>
-
-            <div class="podio-item podio-3">
-              <div class="podio-img-wrap">
-                <img
-                  src="assets/img/shot-amarelo.svg"
-                  alt="Shot 80g"
-                  class="podio-product-img"
-                  onerror="this.src='assets/img/lockup-pascoa.png'"
-                />
-              </div>
-              <div class="podio-medal">🥉</div>
-              <div class="podio-bar podio-bar-3"></div>
-              <div class="podio-info">
-                <strong>Choc. Shot 80g</strong>
-                <span class="podio-qty">1.328 itens</span>
-                <span class="podio-clients">958 clientes</span>
-              </div>
-            </div>
-          </div>
+          <div class="podio-grid" id="podioGrid"></div>
         </div>
       </section>
 
@@ -235,7 +180,7 @@
       <section class="page-section" id="visao-operacional">
         <div class="section-page-header">
           <h2><i class="fas fa-store"></i> Visão Operacional</h2>
-          <p>Resumo de execução por dia e por loja · campanha iniciada em 13/03/2026</p>
+          <p>Resumo diário da campanha e ranking geral de lojas</p>
         </div>
 
         <div class="kpi-row">
@@ -243,8 +188,8 @@
             <div class="kpi-icon"><i class="fas fa-calendar-check"></i></div>
             <div class="kpi-info">
               <span class="kpi-label">Dias Ativos</span>
-              <span class="kpi-value">2</span>
-              <span class="kpi-sub">13 e 14/03</span>
+              <span class="kpi-value">5</span>
+              <span class="kpi-sub">13/03 a 17/03</span>
             </div>
           </div>
 
@@ -252,17 +197,17 @@
             <div class="kpi-icon"><i class="fas fa-user-check"></i></div>
             <div class="kpi-info">
               <span class="kpi-label">Clientes Dentro</span>
-              <span class="kpi-value" data-count="3048">0</span>
-              <span class="kpi-sub">únicos atingidos</span>
+              <span class="kpi-value" data-count="4162">0</span>
+              <span class="kpi-sub">clientes únicos</span>
             </div>
           </div>
 
           <div class="kpi-card kpi-orange">
-            <div class="kpi-icon"><i class="fas fa-building-user"></i></div>
+            <div class="kpi-icon"><i class="fas fa-percent"></i></div>
             <div class="kpi-info">
-              <span class="kpi-label">% Participação</span>
-              <span class="kpi-value">10,00%</span>
-              <span class="kpi-sub">de clientes totais</span>
+              <span class="kpi-label">Participação</span>
+              <span class="kpi-value">11,05%</span>
+              <span class="kpi-sub">sobre a base</span>
             </div>
           </div>
 
@@ -270,17 +215,24 @@
             <div class="kpi-icon"><i class="fas fa-arrow-trend-up"></i></div>
             <div class="kpi-info">
               <span class="kpi-label">Crescimento D13→D14</span>
-              <span class="kpi-value">+56%</span>
-              <span class="kpi-sub">em clientes/dia</span>
+              <span class="kpi-value">+291,5%</span>
+              <span class="kpi-sub">em clientes Dentro</span>
             </div>
           </div>
         </div>
 
         <div class="charts-row-op">
           <div class="chart-card chart-card-wide">
-            <div class="chart-header">
-              <h3><i class="fas fa-chart-line"></i> Clientes e Itens por Dia (Campanha)</h3>
-              <p class="chart-sub">Evolução diária a partir do início da campanha (13/03)</p>
+            <div class="chart-header chart-header-with-actions">
+              <div>
+                <h3><i class="fas fa-chart-line"></i> Clientes e Qtd por Dia</h3>
+                <p class="chart-sub">Filtro Dentro / Fora</p>
+              </div>
+
+              <div class="campaign-view-toggle">
+                <button class="campaign-view-btn active" data-view="Dentro">Dentro</button>
+                <button class="campaign-view-btn" data-view="Fora">Fora</button>
+              </div>
             </div>
             <div class="chart-body" style="height:250px">
               <canvas id="chartOpDiario"></canvas>
@@ -289,72 +241,56 @@
 
           <div class="chart-card chart-card-narrow">
             <div class="chart-header">
-              <h3><i class="fas fa-percent"></i> Participação Campanha</h3>
+              <h3><i class="fas fa-percent"></i> Participação na Base</h3>
             </div>
             <div class="chart-body chart-center-body" style="height:200px">
               <canvas id="chartOpParticipacao"></canvas>
             </div>
-            <div class="donut-legend">
-              <span class="dot dot-purple"></span><span>Atingidos <strong>10,00%</strong></span>
-              <span class="dot dot-cream"></span><span>Gap <strong>90,00%</strong></span>
-            </div>
+            <div class="donut-legend" id="operacionalLegend"></div>
           </div>
         </div>
 
         <div class="section-title-bar" style="margin-top:2rem">
-          <h2>📅 Resumo por Dia e por Loja</h2>
+          <h2>📅 Resumo Diário — Dentro / Fora / Total</h2>
         </div>
 
-        <div class="day-block">
-          <div class="day-header day-header-13">
-            <div class="day-title">
-              <i class="fas fa-calendar-day"></i>
-              <span>13/03/2026</span>
-            </div>
-            <div class="day-totals">
-              <span class="day-badge"><i class="fas fa-users"></i> 1.189 clientes</span>
-              <span class="day-badge"><i class="fas fa-box"></i> 1.964 itens</span>
-            </div>
-          </div>
-          <div class="table-scroll">
-            <table class="loja-table" id="tabelaDia13">
-              <thead>
-                <tr>
-                  <th>Loja</th>
-                  <th>Clientes</th>
-                  <th>Cupons</th>
-                  <th>Itens</th>
-                </tr>
-              </thead>
-              <tbody id="tbodyDia13"></tbody>
-            </table>
-          </div>
+        <div class="table-scroll">
+          <table class="rank-table" id="dailyCampaignTable">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Dentro Qtd</th>
+                <th>Dentro Tickets</th>
+                <th>Dentro Clientes</th>
+                <th>Fora Qtd</th>
+                <th>Fora Tickets</th>
+                <th>Fora Clientes</th>
+                <th>Total Qtd</th>
+                <th>Total Tickets</th>
+                <th>Total Clientes</th>
+              </tr>
+            </thead>
+            <tbody id="dailyCampaignTableBody"></tbody>
+          </table>
         </div>
 
-        <div class="day-block">
-          <div class="day-header day-header-14">
-            <div class="day-title">
-              <i class="fas fa-star"></i>
-              <span>14/03/2026 — Melhor Dia</span>
-            </div>
-            <div class="day-totals">
-              <span class="day-badge best-badge"><i class="fas fa-users"></i> 1.859 clientes</span>
-              <span class="day-badge best-badge"><i class="fas fa-box"></i> 2.976 itens</span>
-            </div>
-          </div>
-          <div class="table-scroll">
-            <table class="loja-table" id="tabelaDia14">
-              <thead>
-                <tr>
-                  <th>Loja</th>
-                  <th>Clientes</th>
-                  <th>Cupons</th>
-                  <th>Itens</th>
-                </tr>
-              </thead>
-              <tbody id="tbodyDia14"></tbody>
-            </table>
-          </div>
+        <div class="section-title-bar" style="margin-top:2rem">
+          <h2>🏬 Ranking Geral de Lojas — Dentro</h2>
+        </div>
+
+        <div class="table-scroll">
+          <table class="rank-table" id="storesTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Loja</th>
+                <th>Qtd</th>
+                <th>Tickets</th>
+                <th>Clientes</th>
+              </tr>
+            </thead>
+            <tbody id="storesTableBody"></tbody>
+          </table>
         </div>
       </section>
 
@@ -362,7 +298,7 @@
       <section class="page-section" id="ranking">
         <div class="section-page-header">
           <h2><i class="fas fa-trophy"></i> Ranking de Produtos</h2>
-          <p>Ordenado por quantidade vendida na campanha · todos os produtos em promoção</p>
+          <p>Ordenado por quantidade vendida na campanha</p>
         </div>
 
         <div class="rank-toggle">
@@ -394,18 +330,13 @@
             <tbody id="rankTableBody"></tbody>
           </table>
         </div>
-
-        <div class="section-title-bar" style="margin-top:2rem">
-          <h2>📅 Melhor Produto por Dia</h2>
-        </div>
-        <div class="best-day-grid" id="bestDayGrid"></div>
       </section>
 
       <!-- ===================== PRODUTOS CAMPANHA ===================== -->
       <section class="page-section" id="produtos-campanha">
         <div class="section-page-header">
           <h2><i class="fas fa-egg"></i> Produtos da Campanha</h2>
-          <p>Mapa completo dos 19 produtos em promoção na Caça aos Coelhos</p>
+          <p>Mapa completo dos 19 produtos em promoção</p>
         </div>
 
         <div class="search-bar-wrap">
@@ -445,34 +376,34 @@
       <section class="page-section" id="operacional-crm">
         <div class="section-page-header">
           <h2><i class="fas fa-users-gear"></i> Operacional CRM</h2>
-          <p>Visão de clientes, engajamento e cobertura da campanha</p>
+          <p>Visão da base, evolução diária e cobertura da campanha</p>
         </div>
 
         <div class="kpi-row">
           <div class="kpi-card kpi-purple">
             <div class="kpi-icon"><i class="fas fa-users"></i></div>
             <div class="kpi-info">
-              <span class="kpi-label">Base Total de Clientes</span>
-              <span class="kpi-value" data-count="96615">0</span>
-              <span class="kpi-sub">clientes únicos período</span>
+              <span class="kpi-label">Base Total</span>
+              <span class="kpi-value" data-count="37671">0</span>
+              <span class="kpi-sub">clientes únicos estimados</span>
             </div>
           </div>
 
           <div class="kpi-card kpi-green">
             <div class="kpi-icon"><i class="fas fa-user-check"></i></div>
             <div class="kpi-info">
-              <span class="kpi-label">Clientes Atingidos</span>
-              <span class="kpi-value" data-count="3048">0</span>
-              <span class="kpi-sub">compraram na campanha</span>
+              <span class="kpi-label">Dentro</span>
+              <span class="kpi-value" data-count="4162">0</span>
+              <span class="kpi-sub">clientes na campanha</span>
             </div>
           </div>
 
           <div class="kpi-card kpi-orange">
             <div class="kpi-icon"><i class="fas fa-user-xmark"></i></div>
             <div class="kpi-info">
-              <span class="kpi-label">Não Atingidos</span>
-              <span class="kpi-value" data-count="95293">0</span>
-              <span class="kpi-sub">gap de cobertura</span>
+              <span class="kpi-label">Fora</span>
+              <span class="kpi-value" data-count="33509">0</span>
+              <span class="kpi-sub">clientes fora da campanha</span>
             </div>
           </div>
 
@@ -480,8 +411,8 @@
             <div class="kpi-icon"><i class="fas fa-link"></i></div>
             <div class="kpi-info">
               <span class="kpi-label">Overlap</span>
-              <span class="kpi-value" data-count="551">0</span>
-              <span class="kpi-sub">clientes dentro + fora</span>
+              <span class="kpi-value">0</span>
+              <span class="kpi-sub">não identificado na planilha</span>
             </div>
           </div>
         </div>
@@ -489,8 +420,8 @@
         <div class="charts-row-geral">
           <div class="chart-card chart-card-wide">
             <div class="chart-header">
-              <h3><i class="fas fa-chart-line"></i> Evolução de Clientes Únicos/Dia (Geral)</h3>
-              <p class="chart-sub">Todos os clientes que compraram no período 01–14/03</p>
+              <h3><i class="fas fa-chart-line"></i> Evolução Diária — Geral</h3>
+              <p class="chart-sub">Totais da planilha de 01/03 a 17/03</p>
             </div>
             <div class="chart-body" style="height:250px">
               <canvas id="chartCRMDiario"></canvas>
@@ -508,7 +439,7 @@
         </div>
 
         <div class="section-title-bar" style="margin-top:2rem">
-          <h2>📅 Clientes Únicos por Dia — Visão Geral</h2>
+          <h2>📅 Clientes por Dia — Total / Dentro / Fora</h2>
         </div>
 
         <div class="table-scroll">
@@ -516,10 +447,10 @@
             <thead>
               <tr>
                 <th>Data</th>
-                <th>Clientes Únicos (Fora)</th>
-                <th>Clientes Únicos (Dentro)</th>
-                <th>Total</th>
-                <th>% Campanha</th>
+                <th>Total Clientes</th>
+                <th>Dentro</th>
+                <th>Fora</th>
+                <th>% Dentro</th>
               </tr>
             </thead>
             <tbody id="crmDayTableBody"></tbody>
@@ -531,19 +462,18 @@
     </main>
   </div>
 
-  <!-- TICKER BAR -->
   <div class="ticker-bar">
     <div class="ticker-content">
       <span>🐰 Caça aos Coelhos Condor</span>
       <span>★ Escaneie e ganhe desconto!</span>
       <span>★ 19 produtos participantes</span>
-      <span>★ Campanha ativa desde 12/03/2026</span>
+      <span>★ Dados atualizados até 17/03/2026</span>
       <span>★ A Maior Páscoa do Brasil!</span>
       <span>★ Condor Premia</span>
       <span>🐰 Caça aos Coelhos Condor</span>
       <span>★ Escaneie e ganhe desconto!</span>
       <span>★ 19 produtos participantes</span>
-      <span>★ Campanha ativa desde 12/03/2026</span>
+      <span>★ Dados atualizados até 17/03/2026</span>
       <span>★ A Maior Páscoa do Brasil!</span>
       <span>★ Condor Premia</span>
     </div>
